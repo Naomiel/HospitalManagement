@@ -1,6 +1,6 @@
 package com.qucoon.hospitalmanagement.repository.query;
 
-public class git MedicationQuery {
+public class MedicationQuery {
     public static final String INSERT_MEDICAION = """
             INSERT INTO Medication (medicationName, medicationDescription, medicationQuantityInStock, medicationPrice, medicationExpiryDate, medicationManufacturer, medication_status, medication_created_at, medication_updated_at)
                     VALUES (:medicationName, :medicationDescription, :medicationQuantityInStock, :medicationPrice, :medicationExpiryDate, :medicationManufacturer, COALESCE(:medictionStatus,'ACTIVE'), GETDATE(), GETDATE())

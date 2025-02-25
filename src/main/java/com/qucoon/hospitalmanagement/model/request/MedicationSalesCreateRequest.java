@@ -9,5 +9,4 @@ import java.util.List;
 public class MedicationSalesCreateRequest {
     private String medicationSalesPatientId;
     private int medicationSalesStaffId;
-    private List<String> medicationId;
 }
