@@ -1,12 +1,11 @@
-package com.qucoon.hospitalmanagement.model.entity;
+package com.qucoon.hospitalmanagement.model.request;
 
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder
-public class Staff {
-    private int staffId;
+public class StaffUpdateRequest {
     private String staffFirstName;
     private String staffLastName;
     private String staffRole;
@@ -14,8 +13,6 @@ public class Staff {
     private String staffPhoneNumber;
     private String staffEmail;
     private Double staffSalary;
-    private String staffHireDate;
     private String staffStatus;
-    private String staffCreatedAt;
-    private String staffUpdatedAt;
+    private String staffHireDate;
 }
