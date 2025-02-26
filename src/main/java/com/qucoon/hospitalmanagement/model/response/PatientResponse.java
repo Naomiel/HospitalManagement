@@ -1,19 +1,11 @@
-package com.qucoon.hospitalmanagement.model.request;
+package com.qucoon.hospitalmanagement.model.response;
 
 import com.qucoon.hospitalmanagement.enums.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PatientCreateRequest {
+public class PatientResponse {
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
