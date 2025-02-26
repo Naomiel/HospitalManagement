@@ -35,5 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 
 !** src/main/resources/application.properties
+=======
+!**/src/main/resources/application.properties
+>>>>>>> fecaec5 (My first commit)
