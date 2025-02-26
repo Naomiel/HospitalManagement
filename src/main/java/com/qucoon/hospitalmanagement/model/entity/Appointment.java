@@ -1,5 +1,4 @@
-package com.qucoon.hospitalmanagement.model.request;
-
+package com.qucoon.hospitalmanagement.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +11,13 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AppointmentCreateRequest {
+public class Appointment {
+    private int id;  // Changed from appointmentId to id for consistency with DB
     private int patientId;
     private int doctorId;
     private Timestamp appointmentDate;
+    private String status;
     private String reason;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 }
