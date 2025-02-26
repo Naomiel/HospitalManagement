@@ -38,7 +38,8 @@ public class ItemRepositoryImpl implements ItemRepository {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("itemMedicationSalesId", item.getItemMedicationSalesId())
                 .addValue("itemMedicationId", item.getItemMedicationId())
-                .addValue("itemQuantity", item.getItemQuantity());
+                .addValue("itemQuantity", item.getItemQuantity())
+                .addValue("itemStatus", item.getItemStatus());
         return jdbcTemplate.update(ItemQuery.INSERT_ITEM, params);
     }
 

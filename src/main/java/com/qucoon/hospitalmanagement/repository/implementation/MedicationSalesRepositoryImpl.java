@@ -38,7 +38,8 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
     public int createMedicationSales(MedicationSales medicationSales) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("medicationSalesPatientId", medicationSales.getMedicationSalesPatientId())
-                .addValue("medicationSalesStaffId", medicationSales.getMedicationSalesStaffId());
+                .addValue("medicationSalesStaffId", medicationSales.getMedicationSalesStaffId())
+                .addValue("medicationSalesStatus", medicationSales.getMedicationSalesStatus());
         return jdbcTemplate.update(MedicationSalesQuery.INSERT_MEDICATION_SALES, params);
     }
 

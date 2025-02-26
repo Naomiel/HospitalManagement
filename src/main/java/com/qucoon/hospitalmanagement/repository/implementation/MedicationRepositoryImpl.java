@@ -32,8 +32,8 @@ public class MedicationRepositoryImpl implements MedicationRepository {
     }
 
     @Override
-    public Medication getMedicationById(int medicationid) {
-        MapSqlParameterSource params = new MapSqlParameterSource("medicationId", medicationid);
+    public Medication getMedicationById(int medicationId) {
+        MapSqlParameterSource params = new MapSqlParameterSource("medicationId", medicationId);
         return jdbcTemplate.queryForObject(MedicationQuery.GET_MEDICATION_BY_ID, params, new MedicationMapper());
     }
 
@@ -45,8 +45,9 @@ public class MedicationRepositoryImpl implements MedicationRepository {
                 .addValue("medicationQuantityInStock", medication.getMedicationQuantityInStock())
                 .addValue("medicationPrice", medication.getMedicationPrice())
                 .addValue("medicationExpiryDate", medication.getMedicationExpiryDate())
-                .addValue("medicationManufacturer", medication.getMedicationManufacturer());
-        return jdbcTemplate.update(MedicationQuery.INSERT_MEDICAION, params);
+                .addValue("medicationManufacturer", medication.getMedicationManufacturer())
+                .addValue("medicationStatus", medication.getMedicationStatus());
+        return jdbcTemplate.update(MedicationQuery.INSERT_MEDICATION, params);
     }
 
     @Override
