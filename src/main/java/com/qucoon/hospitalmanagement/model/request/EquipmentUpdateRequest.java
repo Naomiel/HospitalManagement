@@ -1,17 +1,16 @@
-package com.qucoon.hospitalmanagement.model.entity;
+package com.qucoon.hospitalmanagement.model.request;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class Equipment {
-    private int equipmentId;
+public class EquipmentUpdateRequest {
     private String equipmentName;
     private String equipmentCategory;
     private Integer equipmentQuantity;
     private String equipmentPurchaseDate;
     private String equipmentStatus;
-    private String equipmentCreatedAt;
-    private String equipmentUpdatedAt;
 }
+
+

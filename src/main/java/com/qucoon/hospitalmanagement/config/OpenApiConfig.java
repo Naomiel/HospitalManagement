@@ -1,9 +1,11 @@
 package com.qucoon.hospitalmanagement.config;
 
-
-import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 
 public class OpenApiConfig {
 
@@ -11,8 +13,8 @@ public class OpenApiConfig {
     public OpenAPI openAPI(){
         return new OpenAPI()
                 .info(new Info()
-                        .title("HospitalManagement Documentation")
-                        .description("HospitalManagement Documentation")
+                        .title("Hospital MGT Documentation")
+                        .description("Hospital MGT Documentation")
                         .version("1.0.0"));
     }
 }
