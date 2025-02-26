@@ -8,9 +8,9 @@ public class Medication {
     private int medicationId;
     private String medicationName;
     private String medicationDescription;
-    private String medicationQuantityInStock;
-    private String medicationPrice;
-    private  String medicationExpiryDate;
+    private int medicationQuantityInStock;
+    private double medicationPrice;
+    private String medicationExpiryDate;
     private String medicationManufacturer;
     private String medicationStatus;
     private String medicationCreatedAt;
