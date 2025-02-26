@@ -11,5 +11,5 @@ public class MedicationSalesQuery {
     public static final String GET_ALL_ACTIVE_MEDICATION_SALES = "SELECT * FROM MedicationSales WHERE medicationSalesStatus='ACTIVE'";
     public static final String GET_MEDICATION_SALES_BY_ID = "SELECT * FROM MedicationSales WHERE medicationSalesId=:medicationSalesId";
     public static final String DELETE_MEDICATION_SALES = "UPDATE MedicationSales SET medicationSalesStatus = 'DELETED' WHERE medicationSalesId=:medicationSalesId";
-    public static final String INSERT_MEDICATION_SALES_ITEMS = "INSERT INTO MedicationSalesItems (medicationSalesId, medicationId, quantity) VALUES %s";
+    public static final String INSERT_MEDICATION_SALES_ITEMS = "INSERT INTO Item (itemMedicationSalesId, itemMedicationId, itemQuantity) VALUES %s";
 }
