@@ -12,7 +12,7 @@ public interface PatientRepository {
 
     int createPatient(Patient patient);
 
-    int updatePatient(int patientId, PatientCreateRequest patient);
+    int updatePatient(int patientId, Patient patient);
 
     int deletePatient(int patientId);
 }

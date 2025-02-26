@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,8 +17,8 @@ public class PatientCreateRequest {
     private String firstName;
     private String lastName;
     private String email;
-
-    private String PhoneNumber;
+    private int age;
+    private String phoneNumber;
     private Gender gender;
     private String address;
     private String emergencyContact;

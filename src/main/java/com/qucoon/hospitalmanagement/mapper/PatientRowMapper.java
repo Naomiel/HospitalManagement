@@ -15,11 +15,14 @@ public class PatientRowMapper implements RowMapper<Patient> {
                 .firstName(rs.getString("patientFirstName"))
                 .lastName(rs.getString("patientLastName"))
                 .email(rs.getString("patientEmail"))
+                .age(rs.getInt("patientAge"))
                 .phoneNumber(rs.getString("patientPhoneNumber"))
                 .gender(Gender.valueOf(rs.getString("patientGender")))
-                .status(rs.getString("status"))
-                .createdAt(rs.getString("createdAt"))
-                .updatedAt(rs.getString("updatedAt"))
+                .address(rs.getString("patientAddress"))
+                .emergencyContact(rs.getString("patientEmergencyContact"))
+                .status(rs.getString("patientStatus"))
+                .createdAt(rs.getTimestamp("patientCreatedAt"))
+                .updatedAt(rs.getTimestamp("patientUpdatedAt"))
                 .build();
     }
 }
