@@ -54,8 +54,8 @@ public class MedicationSalesService {
     public int updateMedicationSales(String id, MedicationSalesCreateRequest request){
         Gson gson = new Gson();
         var medicationSales = gson.fromJson(gson.toJson(request), MedicationSales.class);
-        var Id = gson.fromJson(gson.toJson(id), String.class);
-        return medicationSalesRepository.updateMedicationSales(Id, medicationSales);
+//        var Id = gson.fromJson(gson.toJson(id), String.class);
+        return medicationSalesRepository.updateMedicationSales(id, medicationSales);
     }
 
     public int deleteMedicationSales(int id){

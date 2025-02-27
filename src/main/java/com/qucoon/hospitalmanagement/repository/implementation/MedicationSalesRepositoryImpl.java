@@ -98,6 +98,7 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
     @Override
     public int updateMedicationSales(String medicationSalesId, MedicationSales medicationSales) {
         MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("medicationSalesId",medicationSalesId )
                 .addValue("medicationSalesPatientId", medicationSales.getMedicationSalesPatientId())
                 .addValue("medicationSalesStaffId", medicationSales.getMedicationSalesStaffId());
         var sqlQuery = MedicationSalesQuery.buildUpdateQuery(medicationSales, String.valueOf(medicationSalesId));
