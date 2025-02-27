@@ -20,13 +20,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @PostMapping("/create-item")
+    /*@PostMapping("/create-item")
     public ResponseEntity<String> createItem(@RequestBody ItemCreateRequest request){
         var resp =itemService.createItem(request);
         if(resp<1)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Item failed to create");
         return ResponseEntity.ok("Item created successfully");
-    }
+    }*/
 
     @PostMapping("/update-item/{itemId}")
     public ResponseEntity<String> updateItem(@RequestBody ItemCreateRequest request, @PathVariable String itemId){

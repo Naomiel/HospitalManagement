@@ -28,7 +28,7 @@ public class MedicationSalesController {
         return ResponseEntity.ok("MedicationSales created successfully");
     }
 
-    @PostMapping("/update-medicationSales/{medicationSalesId}")
+    @PatchMapping("/update-medicationSales/{medicationSalesId}")
     public ResponseEntity<String> updateMedicationSales(@RequestBody MedicationSalesCreateRequest request, @PathVariable String medicationSalesId){
         var resp =medicationSalesService.updateMedicationSales(medicationSalesId,request);
         if(resp<1)

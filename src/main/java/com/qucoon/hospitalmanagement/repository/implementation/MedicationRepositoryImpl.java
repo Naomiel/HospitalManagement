@@ -2,6 +2,7 @@ package com.qucoon.hospitalmanagement.repository.implementation;
 import com.qucoon.hospitalmanagement.mapper.MedicationMapper;
 import com.qucoon.hospitalmanagement.model.entity.Medication;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationRepository;
+import com.qucoon.hospitalmanagement.repository.query.EquipmentQuery;
 import com.qucoon.hospitalmanagement.repository.query.MedicationQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -60,7 +61,9 @@ public class MedicationRepositoryImpl implements MedicationRepository {
                 .addValue("medicationPrice", medication.getMedicationPrice())
                 .addValue("medicationExpiryDate", medication.getMedicationExpiryDate())
                 .addValue("medicationManufacturer", medication.getMedicationManufacturer());
-        return jdbcTemplate.update(MedicationQuery.UPDATE_MEDICATION, params);
+
+        var sqlQuery = MedicationQuery.buildUpdateQuery(medication, String.valueOf(medicationId));
+        return jdbcTemplate.update(sqlQuery, params);
     }
 
     @Override
