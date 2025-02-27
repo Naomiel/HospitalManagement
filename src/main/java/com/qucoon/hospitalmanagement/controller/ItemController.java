@@ -24,7 +24,7 @@ public class ItemController {
     }
 
     @PostMapping("/create-item")
-    public ResponseEntity<Map<String, Object>> createItem(@Valid @RequestBody ItemCreateRequest request){
+    public ResponseEntity<Map<String, Object>> createItem(@RequestBody ItemCreateRequest request){
         var resp =itemService.createItem(request);
         Map<String, Object> response = new HashMap<>();
 
