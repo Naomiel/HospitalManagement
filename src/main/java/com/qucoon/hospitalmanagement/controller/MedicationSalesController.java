@@ -24,7 +24,7 @@ public class MedicationSalesController {
     }
 
     @PostMapping("/create-medicationSales")
-    public ResponseEntity<Map<String, Object>> createMedicationSales(@Valid @RequestBody MedicationSalesCreateRequest request){
+    public ResponseEntity<Map<String, Object>> createMedicationSales(@RequestBody MedicationSalesCreateRequest request){
         var resp =medicationSalesService.createMedicationSales(request);
         Map<String, Object> response = new HashMap<>();
 
@@ -44,7 +44,7 @@ public class MedicationSalesController {
     }
 
     @PatchMapping("/update-medicationSales/{medicationSalesId}")
-    public ResponseEntity<Map<String, Object>> updateMedicationSales(@Valid @RequestBody MedicationSalesCreateRequest request, @PathVariable String medicationSalesId){
+    public ResponseEntity<Map<String, Object>> updateMedicationSales(@RequestBody MedicationSalesCreateRequest request, @PathVariable String medicationSalesId){
         var resp =medicationSalesService.updateMedicationSales(medicationSalesId,request);
         Map<String, Object> response = new HashMap<>();
 
