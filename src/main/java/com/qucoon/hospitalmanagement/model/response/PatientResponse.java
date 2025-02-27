@@ -14,4 +14,5 @@ public class PatientResponse {
     private Gender gender;
     private String address;
     private String emergencyContact;
+
 }

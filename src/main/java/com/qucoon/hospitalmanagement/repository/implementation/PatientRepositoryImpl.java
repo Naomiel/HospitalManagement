@@ -44,7 +44,7 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .addValue("patientGender", patient.getGender().name())
                 .addValue("patientAddress", patient.getAddress())
                 .addValue("patientEmergencyContact", patient.getEmergencyContact())
-                .addValue("patientStatus", patient.getStatus() != null ? patient.getStatus() : "ACTIVE") ;
+                .addValue("patientStatus", patient.getStatus());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(PatientQuery.INSERT_PATIENT, params, keyHolder, new String[]{"patientId"}); // Ensure "id" is the primary key column
@@ -65,7 +65,6 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .addValue("patientAddress", patient.getAddress())
                 .addValue("patientEmergencyContact", patient.getEmergencyContact())
                .addValue("patientStatus", patient.getStatus() != null ? patient.getStatus() : "ACTIVE") ;
-//                .addValue("patientUpdatedAt", new Timestamp(System.currentTimeMillis())); // ✅ Added
         return jdbcTemplate.update(PatientQuery.UPDATE_PATIENT, params);
     }
 

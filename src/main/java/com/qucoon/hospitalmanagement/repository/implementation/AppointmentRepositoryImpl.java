@@ -1,7 +1,8 @@
 package com.qucoon.hospitalmanagement.repository.implementation;
 
-import com.qucoon.hospitalmanagement.mapper.AppointmentRowMapper;
+import com.qucoon.hospitalmanagement.mapper.GenericRowMapper;
 import com.qucoon.hospitalmanagement.model.entity.Appointment;
+import com.qucoon.hospitalmanagement.model.entity.ViewAppointment;
 import com.qucoon.hospitalmanagement.model.request.AppointmentCreateRequest;
 import com.qucoon.hospitalmanagement.repository.Interface.AppointmentRepository;
 import com.qucoon.hospitalmanagement.repository.query.AppointmentQuery;
@@ -22,41 +23,40 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     @Override
     public int createAppointment(Appointment appointment) {
         MapSqlParameterSource params = new MapSqlParameterSource()
-                .addValue("patientId", appointment.getPatientId())
-                .addValue("doctorId", appointment.getDoctorId())
+                .addValue("appointmentPatientId", appointment.getAppointmentPatientId())
+                .addValue("appointmentStaffId", appointment.getAppointmentStaffId())
                 .addValue("appointmentDate", appointment.getAppointmentDate())
-                .addValue("status", appointment.getStatus())
-                .addValue("reason", appointment.getReason())
-                .addValue("createdAt", new Timestamp(System.currentTimeMillis()));
+                .addValue("appointmentStatus", appointment.getAppointmentStatus())
+                .addValue("appointmentCreatedAt", new Timestamp(System.currentTimeMillis()));
         return jdbcTemplate.update(AppointmentQuery.INSERT_APPOINTMENT, params);
     }
 
     @Override
-    public List<Appointment> getAllAppointments() {
-        return jdbcTemplate.query(AppointmentQuery.GET_ALL_APPOINTMENTS, new AppointmentRowMapper());
+    public List<ViewAppointment> getAllAppointments() {
+        return jdbcTemplate.query(AppointmentQuery.GET_ALL_APPOINTMENTS, new GenericRowMapper<>(ViewAppointment.class));
     }
 
     @Override
-    public Appointment getAppointmentById(int id) {
-        MapSqlParameterSource params = new MapSqlParameterSource("id", id);
-        return jdbcTemplate.queryForObject(AppointmentQuery.GET_APPOINTMENT_BY_ID, params, new AppointmentRowMapper());
+    public ViewAppointment getAppointmentById(int id) {
+        MapSqlParameterSource params = new MapSqlParameterSource("appointmentId", id);
+        return jdbcTemplate.queryForObject(AppointmentQuery.GET_APPOINTMENT_BY_ID, params, new GenericRowMapper<>(ViewAppointment.class));
     }
 
     @Override
     public int updateAppointment(int appointmentId, AppointmentCreateRequest appointment) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("appointmentId", appointmentId)
-                .addValue("patientId", appointment.getPatientId())
-                .addValue("doctorId", appointment.getDoctorId())
+                .addValue("patientId", appointment.getAppointmentPatientId())
+                .addValue("doctorId", appointment.getAppointmentStaffId())
                 .addValue("appointmentDate", appointment.getAppointmentDate())
-                .addValue("reason", appointment.getReason())
                 .addValue("updatedAt", new Timestamp(System.currentTimeMillis()));
         return jdbcTemplate.update(AppointmentQuery.UPDATE_APPOINTMENT, params);
     }
 
+
     @Override
     public int deleteAppointment(int id) {
-        MapSqlParameterSource params = new MapSqlParameterSource("id", id);
+        MapSqlParameterSource params = new MapSqlParameterSource("appointmentId", id);
         jdbcTemplate.update(AppointmentQuery.DELETE_APPOINTMENT, params);
         return id;
     }

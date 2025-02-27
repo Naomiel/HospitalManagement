@@ -1,6 +1,8 @@
 package com.qucoon.hospitalmanagement.model.request;
 
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +15,14 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentCreateRequest {
-    private int patientId;
-    private int doctorId;
+    @NotNull(message = "Appointment PatientId is required")
+    @Min(value = 1, message = "Patient ID must be a positive number")
+    private int appointmentPatientId;
+
+    @NotNull(message = "Appointment StaffId is required")
+    @Min(value = 1, message = "Staff ID must be a positive number")
+    private Integer appointmentStaffId;
+
+    @NotNull(message = "Appointment Date is required")
     private Timestamp appointmentDate;
-    private String reason;
 }

@@ -1,38 +1,50 @@
 package com.qucoon.hospitalmanagement.repository.query;
 
+import com.qucoon.hospitalmanagement.model.entity.Appointment;
+import com.qucoon.hospitalmanagement.model.entity.Staff;
+import com.qucoon.hospitalmanagement.model.entity.ViewAppointment;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class AppointmentQuery {
     public static final String INSERT_APPOINTMENT = """
-        INSERT INTO appointments (patient_id, doctor_id, appointment_date, status, reason, created_at)
-        VALUES (:patientId, :doctorId, :appointmentDate, 'SCHEDULED', :reason, CURRENT_TIMESTAMP)
+        INSERT INTO Appointment (appointmentPatientId, appointmentStaffId, appointmentDate, appointmentStatus, appointmentCreatedAt)
+        VALUES (:appointmentPatientId, :appointmentStaffId, :appointmentDate, 'ACTIVE', CURRENT_TIMESTAMP)
     """;
 
     public static final String GET_ALL_APPOINTMENTS = """
-        SELECT * FROM appointments
+        select Patient.*, Appointment.*,Staff.* from Patient join Appointment on Appointment.appointmentPatientId = Patient.patientId 
+        join Staff on Appointment.appointmentStaffId = Staff.staffId
     """;
 
     public static final String GET_APPOINTMENT_BY_ID = """
-        SELECT * FROM appointments WHERE id = :id
+        select Patient.*, Appointment.*,Staff.* from Patient join Appointment on Appointment.appointmentPatientId = Patient.patientId 
+        join Staff on Appointment.appointmentStaffId = Staff.staffId
+        where Appointment.appointmentId = :appointmentId
     """;
 
     public static final String UPDATE_APPOINTMENT = """
-        UPDATE appointments
-        SET appointment_date = :appointmentDate, updated_at = CURRENT_TIMESTAMP
-        WHERE id = :id
+        UPDATE Appointment
+        SET appointmentPatientId = :appointmentPatientId, appointmentStaffId = :appointmentStaffId, appointmentDate = :appointmentDate, appointmentUpdatedAt = CURRENT_TIMESTAMP
+        WHERE appointmentId = :appointmentId
     """;
 
     public static final String DELETE_APPOINTMENT = """
-        DELETE FROM appointments WHERE id = :id
+        DELETE FROM Appointment WHERE appointmentId = :appointmentId
     """;
 
     public static final String RESCHEDULE_APPOINTMENT = """
-        UPDATE appointments
-        SET appointment_date = :appointmentDate, updated_at = CURRENT_TIMESTAMP
-        WHERE id = :id
+        UPDATE Appointment
+        SET appointmentDate = :appointmentDate, appointmentUpdatedAt = CURRENT_TIMESTAMP
+        WHERE appointmentId = :appointmentId
     """;
 
     public static final String CANCEL_APPOINTMENT = """
-        UPDATE appointments
-        SET status = 'CANCELLED', updated_at = CURRENT_TIMESTAMP
-        WHERE id = :id
+        UPDATE Appointment
+        SET appointmentStatus = 'CANCELLED', appointmentUpdatedAt = CURRENT_TIMESTAMP
+        WHERE appointmentId = :appointmentId
     """;
+
+
 }

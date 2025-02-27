@@ -2,6 +2,7 @@ package com.qucoon.hospitalmanagement.Service;
 
 import com.google.gson.Gson;
 import com.qucoon.hospitalmanagement.model.entity.Appointment;
+import com.qucoon.hospitalmanagement.model.entity.ViewAppointment;
 import com.qucoon.hospitalmanagement.model.request.AppointmentCreateRequest;
 import com.qucoon.hospitalmanagement.repository.Interface.AppointmentRepository;
 import org.springframework.stereotype.Service;
@@ -25,11 +26,11 @@ public class AppointmentService {
 
     }
 
-    public List<Appointment> getAllAppointments() {
+    public List<ViewAppointment> getAllAppointments() {
         return appointmentRepository.getAllAppointments();
     }
 
-    public Appointment getAppointmentById(int id) {
+    public ViewAppointment getAppointmentById(int id) {
         return appointmentRepository.getAppointmentById(id);
     }
 
