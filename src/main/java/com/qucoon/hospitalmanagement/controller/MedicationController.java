@@ -44,7 +44,7 @@ public class MedicationController {
     }
 
     @PatchMapping("/update-medication/{medicationId}")
-    public ResponseEntity<Map<String, Object>> updateMedication(@RequestBody MedicationAddRequest request, @PathVariable String medicationId){
+    public ResponseEntity<Map<String, Object>> updateMedication(@Valid @RequestBody MedicationAddRequest request, @PathVariable String medicationId){
         var resp =medicationService.updateMedication(medicationId,request);
         Map<String, Object> response = new HashMap<>();
 

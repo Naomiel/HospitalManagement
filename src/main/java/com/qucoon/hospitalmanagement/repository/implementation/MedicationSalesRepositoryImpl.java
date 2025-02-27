@@ -1,15 +1,24 @@
 package com.qucoon.hospitalmanagement.repository.implementation;
 
+import com.google.gson.reflect.TypeToken;
+import com.qucoon.hospitalmanagement.mapper.GenericRowMapper;
 import com.qucoon.hospitalmanagement.mapper.MedicationSalesMapper;
 import com.qucoon.hospitalmanagement.model.entity.MedicationSales;
+import com.qucoon.hospitalmanagement.model.entity.ViewMedicationItems;
+import com.qucoon.hospitalmanagement.model.entity.ViewMedicationSales;
 import com.qucoon.hospitalmanagement.model.request.MedicationList;
+import com.qucoon.hospitalmanagement.model.response.MedicationSalesResponse;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationSalesRepository;
+import com.qucoon.hospitalmanagement.repository.query.ItemQuery;
+import com.qucoon.hospitalmanagement.repository.query.MedicationQuery;
 import com.qucoon.hospitalmanagement.repository.query.MedicationSalesQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,14 +35,24 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
     }
 
     @Override
-    public List<MedicationSales> getAllActiveMedicationSales() {
-        return jdbcTemplate.query(MedicationSalesQuery.GET_ALL_ACTIVE_MEDICATION_SALES, new MedicationSalesMapper());
+    public List<ViewMedicationSales> getAllActiveMedicationSales() {
+        return jdbcTemplate.query(MedicationSalesQuery.GET_ALL_ACTIVE_MEDICATION_SALES_DETAILS, new GenericRowMapper<>(ViewMedicationSales.class));
     }
 
     @Override
-    public MedicationSales getMedicationSalesById(int medicationSalesId) {
+    public MedicationSalesResponse getMedicationSalesById(int medicationSalesId) {
         MapSqlParameterSource params = new MapSqlParameterSource("medicationSalesId",  medicationSalesId);
-        return jdbcTemplate.queryForObject(MedicationSalesQuery.GET_MEDICATION_SALES_BY_ID, params,  new MedicationSalesMapper());
+        var medicationSales = jdbcTemplate.queryForObject(MedicationSalesQuery.GET_MEDICATION_SALES_DETAILS_BY_ID, params,  new GenericRowMapper<>(ViewMedicationSales.class));
+
+        MapSqlParameterSource params2 = new MapSqlParameterSource("itemMedicationSalesId",  medicationSalesId);
+
+
+        List<ViewMedicationItems> medicationItems = jdbcTemplate.query(
+                ItemQuery.GET_ITEM_BY_MEDICATION_SALES_ID,
+                params2,
+                new GenericRowMapper<>(ViewMedicationItems.class)
+        );        return new MedicationSalesResponse(medicationSales, medicationItems);
+
     }
 
     @Override
@@ -81,12 +100,21 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("medicationSalesPatientId", medicationSales.getMedicationSalesPatientId())
                 .addValue("medicationSalesStaffId", medicationSales.getMedicationSalesStaffId());
-        return jdbcTemplate.update(MedicationSalesQuery.UPDATE_MEDICATION_SALES, params);
+        var sqlQuery = MedicationSalesQuery.buildUpdateQuery(medicationSales, String.valueOf(medicationSalesId));
+        return jdbcTemplate.update(sqlQuery, params);
     }
 
     @Override
     public int deleteMedicationSales(int medicationSalesId) {
         MapSqlParameterSource params = new MapSqlParameterSource("medicationSalesId",  medicationSalesId);
-        return jdbcTemplate.update(MedicationSalesQuery.DELETE_MEDICATION_SALES, params);
+        var deleteMedicationSales = jdbcTemplate.update(MedicationSalesQuery.DELETE_MEDICATION_SALES, params);
+
+        MapSqlParameterSource params2 = new MapSqlParameterSource("itemMedicationSalesId",  medicationSalesId);
+        var deleteItems = jdbcTemplate.update(ItemQuery.DELETE_ITEM_BY_MEDICATION_SALES_ID, params2);
+
+        if (deleteItems == deleteMedicationSales) {
+            return 1;
+        }
+        return 0;
     }
 }
