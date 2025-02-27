@@ -33,7 +33,7 @@ public class ItemRepositoryImpl implements ItemRepository {
         return jdbcTemplate.queryForObject(ItemQuery.GET_ITEM_BY_ID, params, new ItemMapper());
     }
 
-    @Override
+    /*@Override
     public int createItem(Item item) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("itemMedicationSalesId", item.getItemMedicationSalesId())
@@ -41,7 +41,7 @@ public class ItemRepositoryImpl implements ItemRepository {
                 .addValue("itemQuantity", item.getItemQuantity())
                 .addValue("itemStatus", item.getItemStatus());
         return jdbcTemplate.update(ItemQuery.INSERT_ITEM, params);
-    }
+    }*/
 
     @Override
     public int updateItem(String itemId, Item item) {

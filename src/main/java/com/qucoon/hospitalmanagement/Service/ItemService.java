@@ -31,11 +31,11 @@ public class ItemService {
         return itemRepository.getItemById(id);
     }
 
-    public int createItem(ItemCreateRequest request){
+    /*public int createItem(ItemCreateRequest request){
         Gson gson = new Gson();
         var item = gson.fromJson(gson.toJson(request), Item.class);
         return itemRepository.createItem(item);
-    }
+    }*/
 
     public int updateItem(String id, ItemCreateRequest request){
         Gson gson = new Gson();
