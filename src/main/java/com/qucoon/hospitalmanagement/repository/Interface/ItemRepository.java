@@ -11,7 +11,7 @@ public interface ItemRepository {
 
     Item getItemById(int itemId);
 
-    //int createItem(Item item);
+    int createItem(Item item);
 
     int updateItem(String itemId, Item item);
 

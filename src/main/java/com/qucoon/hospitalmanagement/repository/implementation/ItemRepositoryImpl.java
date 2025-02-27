@@ -4,6 +4,7 @@ import com.qucoon.hospitalmanagement.mapper.ItemMapper;
 import com.qucoon.hospitalmanagement.model.entity.Item;
 import com.qucoon.hospitalmanagement.repository.Interface.ItemRepository;
 import com.qucoon.hospitalmanagement.repository.query.ItemQuery;
+import com.qucoon.hospitalmanagement.repository.query.MedicationSalesQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -33,7 +34,7 @@ public class ItemRepositoryImpl implements ItemRepository {
         return jdbcTemplate.queryForObject(ItemQuery.GET_ITEM_BY_ID, params, new ItemMapper());
     }
 
-    /*@Override
+    @Override
     public int createItem(Item item) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("itemMedicationSalesId", item.getItemMedicationSalesId())
@@ -41,7 +42,7 @@ public class ItemRepositoryImpl implements ItemRepository {
                 .addValue("itemQuantity", item.getItemQuantity())
                 .addValue("itemStatus", item.getItemStatus());
         return jdbcTemplate.update(ItemQuery.INSERT_ITEM, params);
-    }*/
+    }
 
     @Override
     public int updateItem(String itemId, Item item) {
@@ -50,7 +51,8 @@ public class ItemRepositoryImpl implements ItemRepository {
                 .addValue("itemMedicationSalesId", item.getItemMedicationSalesId())
                 .addValue("itemMedicationId", item.getItemMedicationId())
                 .addValue("itemQuantity", item.getItemQuantity());
-        return jdbcTemplate.update(ItemQuery.UPDATE_ITEM, params);
+        var sqlQuery = ItemQuery.buildUpdateQuery(item, String.valueOf(itemId));
+        return jdbcTemplate.update(sqlQuery, params);
     }
     @Override
     public int deleteItem(int itemId) {

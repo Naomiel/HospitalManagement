@@ -3,9 +3,11 @@ package com.qucoon.hospitalmanagement.Service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qucoon.hospitalmanagement.model.entity.MedicationSales;
+import com.qucoon.hospitalmanagement.model.entity.ViewMedicationSales;
 import com.qucoon.hospitalmanagement.model.request.MedicationList;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesRequest;
+import com.qucoon.hospitalmanagement.model.response.MedicationSalesResponse;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationSalesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +27,12 @@ public class MedicationSalesService {
         return medicationSalesRepository.getAllMedicationSales();
     }
 
-    public List<MedicationSales> getAllActiveMedicationSales(){
+    public List<ViewMedicationSales> getAllActiveMedicationSales(){
         return medicationSalesRepository.getAllActiveMedicationSales();
     }
 
 
-    public MedicationSales getMedicationSalesById(int id){
+    public MedicationSalesResponse getMedicationSalesById(int id){
         return medicationSalesRepository.getMedicationSalesById(id);
     }
 
