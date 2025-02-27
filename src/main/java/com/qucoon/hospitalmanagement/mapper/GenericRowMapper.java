@@ -1,5 +1,6 @@
 package com.qucoon.hospitalmanagement.mapper;
 
+
 import org.springframework.jdbc.core.RowMapper;
 
 import java.lang.reflect.Field;
@@ -37,4 +38,5 @@ public class GenericRowMapper<T> implements RowMapper<T> {
         }
     }
 }
+
 
