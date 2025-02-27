@@ -21,8 +21,8 @@ public class PatientRowMapper implements RowMapper<Patient> {
                 .address(rs.getString("patientAddress"))
                 .emergencyContact(rs.getString("patientEmergencyContact"))
                 .status(rs.getString("patientStatus"))
-                .createdAt(rs.getTimestamp("patientCreatedAt"))
-                .updatedAt(rs.getTimestamp("patientUpdatedAt"))
+                .createdAt(rs.getString("patientCreatedAt"))
+                .updatedAt(rs.getString("patientUpdatedAt"))
                 .build();
     }
 }

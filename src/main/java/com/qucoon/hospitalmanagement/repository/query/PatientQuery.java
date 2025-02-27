@@ -7,7 +7,7 @@ public class PatientQuery {
                                      patientCreatedAt, patientUpdatedAt)
                 VALUES (:patientFirstName, :patientLastName, :patientEmail, :patientPhoneNumber,
                         :patientGender, :patientAge, :patientAddress, :patientEmergencyContact,COALESCE(:patientStatus,'ACTIVE'),
-                        NOW(), NOW())
+                        GETDATE(), GETDATE())
             """;
 
     public static final String GET_ALL = """

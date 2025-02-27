@@ -11,7 +11,12 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Appointment {
+public class ViewAppointment {
+    private String patientFirstName;
+    private String patientLastName;
+    private int patientAge;
+    private String staffFirstName;
+    private String staffLastName;
     private int appointmentId;  // Changed from appointmentId to id for consistency with DB
     private int appointmentPatientId;
     private int appointmentStaffId;
@@ -20,4 +25,3 @@ public class Appointment {
     private Timestamp appointmentCreatedAt;
     private Timestamp appointmentUpdatedAt;
 }
-

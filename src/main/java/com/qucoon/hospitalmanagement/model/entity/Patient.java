@@ -25,7 +25,7 @@ public class Patient {
     private String address;
     private String emergencyContact;
     private String status;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
 }

@@ -3,12 +3,16 @@ package com.qucoon.hospitalmanagement.controller;
 
 import com.qucoon.hospitalmanagement.Service.AppointmentService;
 import com.qucoon.hospitalmanagement.model.entity.Appointment;
+import com.qucoon.hospitalmanagement.model.entity.ViewAppointment;
 import com.qucoon.hospitalmanagement.model.request.AppointmentCreateRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/appointments")
@@ -21,22 +25,33 @@ public class AppointmentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createAppointment(@RequestBody AppointmentCreateRequest request) {
+    public ResponseEntity<Map<String, Object>> createAppointment(@Valid @RequestBody AppointmentCreateRequest request) {
         int resp = appointmentService.createAppointment(request);
+        Map<String, Object> response = new HashMap<>();
+
         if (resp < 1) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Appointment failed to create");
+            response.put("response_code", "09");
+            response.put("status", "failed");
+            response.put("message", "Appointment creation failed");
+            response.put("data", Map.of("appointment", "{}"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-        return ResponseEntity.ok("Appointment created successfully");
+
+        response.put("response_code", "00");
+        response.put("status", "success");
+        response.put("message", "Appointment created successfully");
+        response.put("data", Map.of("appointment", request));
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Appointment>> getAllAppointments() {
+    public ResponseEntity<List<ViewAppointment>> getAllAppointments() {
         return ResponseEntity.ok(appointmentService.getAllAppointments());
     }
 
     @GetMapping("/{appointmentId}")
-    public ResponseEntity<Appointment> getAppointmentById(@PathVariable int appointmentId) {
-        Appointment appointment = appointmentService.getAppointmentById(appointmentId);
+    public ResponseEntity<ViewAppointment> getAppointmentById(@PathVariable int appointmentId) {
+        ViewAppointment appointment = appointmentService.getAppointmentById(appointmentId);
         if (appointment == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
