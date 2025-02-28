@@ -5,6 +5,7 @@ import com.qucoon.hospitalmanagement.mapper.PatientRowMapper;
 import com.qucoon.hospitalmanagement.model.entity.Patient;
 import com.qucoon.hospitalmanagement.repository.Interface.PatientRepository;
 import com.qucoon.hospitalmanagement.repository.query.PatientQuery;
+import com.qucoon.hospitalmanagement.repository.query.StaffQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -64,9 +65,10 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .addValue("patientGender", patient.getGender().name())
                 .addValue("patientAddress", patient.getAddress())
                 .addValue("patientEmergencyContact", patient.getEmergencyContact())
-               .addValue("patientStatus", patient.getStatus() != null ? patient.getStatus() : "ACTIVE") ;
+                .addValue("patientStatus", patient.getStatus() != null ? patient.getStatus() : "ACTIVE");
         return jdbcTemplate.update(PatientQuery.UPDATE_PATIENT, params);
     }
+
 
 
     @Override
