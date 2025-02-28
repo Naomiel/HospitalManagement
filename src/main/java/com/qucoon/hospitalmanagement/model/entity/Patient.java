@@ -19,7 +19,7 @@ public class Patient {
     private String firstName;
     private String lastName;
     private String email;
-    private int age;
+    private Integer age;
     private String phoneNumber;
     private Gender gender;
     private String address;

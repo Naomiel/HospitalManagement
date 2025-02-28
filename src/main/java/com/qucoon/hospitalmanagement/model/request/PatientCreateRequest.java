@@ -22,7 +22,7 @@ public class PatientCreateRequest {
     private String email;
     @Email(message = "staffEmail should be valid")
     @NotBlank(message = "Age is required")
-    private int age;
+    private Integer age;
     @NotBlank(message = "Phone number is required")
     private String phoneNumber;
     @NotBlank(message = "Gender is required and must be in Capital letters.")
