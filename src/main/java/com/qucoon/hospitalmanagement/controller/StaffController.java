@@ -4,6 +4,7 @@ import com.qucoon.hospitalmanagement.Service.StaffService;
 import com.qucoon.hospitalmanagement.model.entity.Staff;
 import com.qucoon.hospitalmanagement.model.request.StaffCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.StaffUpdateRequest;
+import com.qucoon.hospitalmanagement.model.response.StaffResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,94 +31,35 @@ public class StaffController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> createStaff(@Valid @RequestBody StaffCreateRequest request) {
-        var resp = staffService.createStaff(request);
-
-        Map<String, Object> response = new HashMap<>();
-
-        if (resp < 1) {
-            response.put("response_code", "09");
-            response.put("status", "failed");
-            response.put("message", "Staff creation failed");
-            response.put("data", Map.of("staff", "{}"));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        response.put("response_code", "00");
-        response.put("status", "success");
-        response.put("message", "Staff created successfully");
-        response.put("data", Map.of("staff", request));
+    public ResponseEntity<StaffResponse> createStaff(@Valid @RequestBody StaffCreateRequest request) {
+        var response = staffService.createStaff(request);
         return ResponseEntity.ok(response);
+
     }
 
     @GetMapping("/view")
-    public ResponseEntity<Map<String, Object>> getAllStaff() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("response_code", "00");
-        response.put("status", "success");
-        response.put("message", "Staff fetched successfully");
-        response.put("data", Map.of("staff", staffService.getAllStaff()));
+    public ResponseEntity<StaffResponse> getAllStaff() {
+        var response = staffService.getAllStaff();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/view/{staffId}")
-    public ResponseEntity<Map<String, Object>> getStaffById(@PathVariable int staffId) {
+    public ResponseEntity<StaffResponse> getStaffById(@PathVariable int staffId) {
 
-        var resp = staffService.getStaffById(staffId);
-
-        Map<String, Object> response = new HashMap<>();
-        if (resp == null) {
-            response.put("response_code", "09");
-            response.put("status", "failed");
-            response.put("message", "Unable to find staff");
-            response.put("data", Map.of("staff", "{}"));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-        response.put("response_code", "00");
-        response.put("status", "success");
-        response.put("message", "Staff fetch successfully");
-        response.put("data", Map.of("staff", resp));
+        var response = staffService.getStaffById(staffId);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/update/{staffId}")
-    public ResponseEntity<Map<String, Object>> updateStaff(@Valid @RequestBody StaffUpdateRequest request, @PathVariable int staffId) {
-        var resp = staffService.updateStaff(request, staffId);
-
-        Map<String, Object> response = new HashMap<>();
-        if (resp < 1) {
-            response.put("response_code", "09");
-            response.put("status", "failed");
-            response.put("message", "Unable to update staff");
-//            response.put("data", Map.of("staff", "{}"));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-
-        response.put("response_code", "00");
-        response.put("status", "success");
-        response.put("message", "Staff updated successfully");
-//        response.put("data", Map.of("staff", request));
+    public ResponseEntity<StaffResponse> updateStaff(@Valid @RequestBody StaffUpdateRequest request, @PathVariable int staffId) {
+        var response = staffService.updateStaff(request, staffId);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{staffId}")
-    public ResponseEntity<Map<String, Object>> deleteStaff(@PathVariable int staffId) {
-        var resp = staffService.deleteStaff(staffId);
-
-        Map<String, Object> response = new HashMap<>();
-        if (resp < 1) {
-            response.put("response_code", "09");
-            response.put("status", "failed");
-            response.put("message", "Unable to delete staff");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-
-
-        response.put("response_code", "00");
-        response.put("status", "success");
-        response.put("message", "Staff deleted successfully");
+    public ResponseEntity<StaffResponse>  deleteStaff(@PathVariable int staffId) {
+        var response = staffService.deleteStaff(staffId);
         return ResponseEntity.ok(response);
+
     }
 }
