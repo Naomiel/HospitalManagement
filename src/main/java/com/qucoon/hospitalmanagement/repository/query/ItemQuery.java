@@ -26,6 +26,16 @@ public class ItemQuery {
     public static final String GET_ITEM_BY_ID = "SELECT * FROM Item WHERE itemId = :itemId AND itemStatus='ACTIVE'";
     public static final String DELETE_ITEM_BY_MEDICATION_SALES_ID = "UPDATE Item SET itemStatus = 'DELETED' WHERE itemMedicationSalesId = :itemMedicationSalesId";
     public static final String DELETE_ITEM_BY_ID = "UPDATE Item SET itemStatus = 'DELETED' WHERE itemId = :itemId";
+    public static final String GET_TOTAL_REVENUE_FROM_MEDICATION_SALES_PER_TIME = """
+            SELECT SUM(m.medicationPrice * i.itemQuantity) AS total_revenue
+            FROM
+                Item i
+            JOIN
+                Medication m ON i.itemMedicationId = m.medicationId
+            WHERE
+                i.itemMedicationId = :medicationId
+                AND i.itemCreatedAt BETWEEN :startDate AND :endDate
+                AND i.itemStatus = 'ACTIVE'""";
     /*public static String buildUpdateQuery(Item request, String itemId) {
         StringBuilder query = new StringBuilder("UPDATE Item SET ");
         Map<String, Object> params = new HashMap<>();

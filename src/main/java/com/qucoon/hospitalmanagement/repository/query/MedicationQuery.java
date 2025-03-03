@@ -17,6 +17,7 @@ public class MedicationQuery {
     public static final String GET_ALL_ACTIVE_MEDICATIONS = "SELECT * FROM Medication WHERE medicationStatus='ACTIVE'";
     public static final String GET_MEDICATION_BY_ID = "SELECT * FROM Medication WHERE medicationId=:medicationId AND medicationStatus='ACTIVE'";
     public static final String DELETE_MEDICATION = "UPDATE Medication SET medicationStatus = 'DELETED' WHERE medicationId=:medicationId";
+    public static final String GET_MEDICATIONS_QUANTITY_IN_STOCK = "SELECT medicationQuantityInStock FROM Medication WHERE medicationId=:medicationId AND medicationStatus='ACTIVE'";
     /*public static String buildUpdateQuery(Medication request, String medicationId) {
         StringBuilder query = new StringBuilder("UPDATE Medication SET ");
         Map<String, Object> params = new HashMap<>();

@@ -1,20 +1,16 @@
 package com.qucoon.hospitalmanagement.controller;
 
 import com.qucoon.hospitalmanagement.Service.ItemService;
-import com.qucoon.hospitalmanagement.model.entity.Item;
+
 import com.qucoon.hospitalmanagement.model.request.ItemCreateRequest;
 import com.qucoon.hospitalmanagement.model.response.GenericResponse;
 import com.qucoon.hospitalmanagement.model.response.GetAllItemsResponse;
 import com.qucoon.hospitalmanagement.model.response.GetItemResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/items")
