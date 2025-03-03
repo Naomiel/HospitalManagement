@@ -102,6 +102,7 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
                 .addValue("medicationSalesPatientId", medicationSales.getMedicationSalesPatientId())
                 .addValue("medicationSalesStaffId", medicationSales.getMedicationSalesStaffId());
         var sqlQuery = MedicationSalesQuery.buildUpdateQuery(medicationSales, String.valueOf(medicationSalesId));
+
         return jdbcTemplate.update(sqlQuery, params);
     }
 

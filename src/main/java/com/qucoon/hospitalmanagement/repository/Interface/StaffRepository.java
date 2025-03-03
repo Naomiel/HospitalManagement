@@ -5,7 +5,7 @@ import com.qucoon.hospitalmanagement.model.request.StaffUpdateRequest;
 import java.util.List;
 
 public interface StaffRepository {
-    int createStaff(Staff staff);
+    Staff createStaff(Staff staff);
     List<Staff> getAllStaff();
     Staff getStaffById(int staffId);
     int updateStaff(Staff Staff, int staffId);
