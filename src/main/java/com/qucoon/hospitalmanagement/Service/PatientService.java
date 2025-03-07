@@ -30,17 +30,18 @@ public class PatientService {
     }
 
 
-    public PatientResponse createPatient(PatientCreateRequest request) {
+    public int createPatient(PatientCreateRequest request) {
         Gson gson = new Gson();
         var patient = gson.fromJson(gson.toJson(request), Patient.class);
-        int patientId = patientRepository.createPatient(patient);
-        if(patientId > 0){
-          Patient patient1 = patientRepository.getPatientById(patientId);
-          var patientResp = gson.fromJson(gson.toJson(patient1), PatientResponse.class);
-          return patientResp;
-        }
-        return new PatientResponse();
+        return patientRepository.createPatient(patient);
     }
+//        if(patientId > 0){
+//          Patient patient1 = patientRepository.getPatientById(patientId);
+//          var patientResp = gson.fromJson(gson.toJson(patient1), PatientResponse.class);
+//          return patientResp;
+//        }
+//        return new PatientResponse();
+//    }
 
     public int updatePatient(int patientId, Patient patient) {
         return patientRepository.updatePatient(patientId, patient);

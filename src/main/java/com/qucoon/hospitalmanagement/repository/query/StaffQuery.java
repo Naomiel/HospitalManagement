@@ -9,7 +9,8 @@ public class StaffQuery {
 
     public static final String INSERT_STAFF = """
     INSERT INTO Staff (staffFirstName, staffLastName, staffRole, staffDepartment, staffPhoneNumber, staffEmail, staffSalary, staffHireDate, staffStatus, staffCreatedAt, staffUpdatedAt) 
-    VALUES (:staffFirstName, :staffLastName, :staffRole, :staffDepartment, :staffPhoneNumber, :staffEmail, :staffSalary, :staffHireDate, 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    VALUES (:staffFirstName, :staffLastName, :staffRole, :staffDepartment, :staffPhoneNumber, :staffEmail, :staffSalary, :staffHireDate, 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+            
     """;
 
     public static final String GET_ALL_STAFF = "SELECT * FROM Staff where staffStatus != 'deleted'";

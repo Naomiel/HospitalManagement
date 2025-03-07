@@ -7,6 +7,8 @@ import com.qucoon.hospitalmanagement.repository.query.EquipmentQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +24,11 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
     }
 
     @Override
-    public int createEquipment(Equipment equipment) {
+    public Equipment createEquipment(Equipment equipment) {
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("equipmentName", equipment.getEquipmentName())
                 .addValue("equipmentCategory", equipment.getEquipmentCategory())
@@ -30,7 +36,14 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
                 .addValue("equipmentPurchaseDate", equipment.getEquipmentPurchaseDate())
                 .addValue("equipmentStatus", equipment.getEquipmentStatus());
 
-        return jdbcTemplate.update(EquipmentQuery.INSERT_EQUIPMENT, params);
+         jdbcTemplate.update(EquipmentQuery.INSERT_EQUIPMENT, params, keyHolder, new String[]{"equipmentId"});
+
+        Number generatedId = keyHolder.getKey();
+        if (generatedId != null) {
+            equipment.setEquipmentId(generatedId.intValue()); // Set the last inserted ID to equipment object
+        }
+
+        return equipment;
     }
     
 

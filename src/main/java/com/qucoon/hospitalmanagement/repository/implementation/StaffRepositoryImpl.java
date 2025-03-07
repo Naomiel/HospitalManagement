@@ -12,6 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
 @Repository
 public class StaffRepositoryImpl implements StaffRepository {
 
@@ -23,7 +26,9 @@ public class StaffRepositoryImpl implements StaffRepository {
     }
 
     @Override
-    public int createStaff(Staff staff) {
+    public Staff createStaff(Staff staff) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("staffFirstName", staff.getStaffFirstName())
                 .addValue("staffLastName", staff.getStaffLastName())
@@ -34,7 +39,15 @@ public class StaffRepositoryImpl implements StaffRepository {
                 .addValue("staffDepartment", staff.getStaffDepartment())
                 .addValue("staffHireDate", staff.getStaffHireDate());
 
-        return jdbcTemplate.update(StaffQuery.INSERT_STAFF, params);
+        jdbcTemplate.update(StaffQuery.INSERT_STAFF, params, keyHolder, new String[]{"staffId"});
+
+        // Retrieve the generated staffId
+        Number generatedId = keyHolder.getKey();
+        if (generatedId != null) {
+            staff.setStaffId(generatedId.intValue()); // Set the last inserted ID to staff object
+        }
+
+        return staff;
     }
 
     @Override

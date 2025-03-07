@@ -189,6 +189,7 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
             // Throw a custom exception
             throw new DatabaseOperationException("Failed to update medicationSales into the database", e);
         }
+
     }
 
     @Override

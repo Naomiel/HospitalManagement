@@ -30,6 +30,7 @@ public class MedicationSalesController {
     @PatchMapping("/update-medicationSales/{medicationSalesId}")
     public ResponseEntity<GenericResponse> updateMedicationSales(@Valid @RequestBody MedicationSalesRequest request, @PathVariable String medicationSalesId){
         return ResponseEntity.ok(medicationSalesService.updateMedicationSales(medicationSalesId,request));
+
     }
 
     @DeleteMapping("/delete-medicationSales/{medicationSalesId}")
