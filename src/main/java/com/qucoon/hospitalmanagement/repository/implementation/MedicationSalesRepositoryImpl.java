@@ -3,6 +3,7 @@ package com.qucoon.hospitalmanagement.repository.implementation;
 import com.google.gson.reflect.TypeToken;
 import com.qucoon.hospitalmanagement.exception.DatabaseOperationException;
 import com.qucoon.hospitalmanagement.mapper.GenericRowMapper;
+import com.qucoon.hospitalmanagement.mapper.MedicationMapper;
 import com.qucoon.hospitalmanagement.mapper.MedicationSalesMapper;
 import com.qucoon.hospitalmanagement.model.entity.MedicationSales;
 import com.qucoon.hospitalmanagement.model.entity.ViewMedicationItems;
@@ -121,10 +122,11 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
                 MapSqlParameterSource params = new MapSqlParameterSource()
                         .addValue("itemMedicationId", medicationList.getItemMedicationId())
                         .addValue("itemMedicationSalesId", itemMedicationSalesId)
-                        .addValue("itemQuantity", medicationList.getItemQuantity());
+                        .addValue("itemQuantity", medicationList.getItemQuantity())
+                        .addValue("itemStatus", "ACTIVE");
 
                 jdbcTemplate.update(ItemQuery.INSERT_ITEM, params);
-
+                jdbcTemplate.update(MedicationQuery.REDUCE_MEDICATION_QUANTITY, params);
         /*for (int i = 0; i < medicationIdAndQuantity.size(); i++) {
             valuesPlaceholder.append("(:itemMedicationSalesId").append(i)
                     .append(", :itemMedicationId").append(i)
@@ -140,6 +142,30 @@ public class MedicationSalesRepositoryImpl implements MedicationSalesRepository 
                 //        valuesPlaceholder.substring(0, valuesPlaceholder.length() - 2));
             }
             return 1;
+        } catch (Exception e) {
+            logger.error("Database operation failed: {}", e.getMessage(), e);
+            System.err.println("Database operation failed: {}" + e.getMessage() + e);            // Throw a custom exception
+            throw new DatabaseOperationException("Failed to insert items into the database", e);
+        }
+    }
+
+    @Override
+    public List<String> checkMedicationQuantity(List<MedicationList> medicationIdAndQuantity) {
+        List<String> medicationQuantityNotInStock = new ArrayList<>();
+        try {
+            for (MedicationList medicationList : medicationIdAndQuantity) {
+                MapSqlParameterSource params = new MapSqlParameterSource()
+                        .addValue("medicationId", medicationList.getItemMedicationId());
+                var quantity = jdbcTemplate.query(MedicationQuery.GET_MEDICATION_BY_ID, params, new MedicationMapper());
+
+                if (quantity.get(0).getMedicationQuantityInStock() < medicationList.getItemQuantity()) {
+                    System.out.println(quantity.get(0).getMedicationName() + " has only " + quantity.get(0).getMedicationQuantityInStock() + " units left in stock");
+                    medicationQuantityNotInStock.add(quantity.get(0).getMedicationName() + " has only " + quantity.get(0).getMedicationQuantityInStock() + " units left in stock");
+                }
+            }
+            return medicationQuantityNotInStock;
+        } catch (EmptyResultDataAccessException e){
+            return medicationQuantityNotInStock;
         } catch (Exception e) {
             logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);            // Throw a custom exception

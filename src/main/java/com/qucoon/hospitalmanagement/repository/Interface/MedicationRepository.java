@@ -2,6 +2,7 @@ package com.qucoon.hospitalmanagement.repository.Interface;
 
 import com.qucoon.hospitalmanagement.model.entity.Medication;
 
+import java.util.Date;
 import java.util.List;
 
 public interface MedicationRepository {
@@ -10,6 +11,8 @@ public interface MedicationRepository {
     List<Medication> getAllActiveMedications();
 
     Medication getMedicationById(int medicationId);
+
+    Double getMedicationRevenueByIdAndDate(int medicationId, String startDate, String endDate);
 
     int createMedication(Medication medication);
 

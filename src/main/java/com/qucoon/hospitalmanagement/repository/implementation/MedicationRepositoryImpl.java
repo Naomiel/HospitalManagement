@@ -1,8 +1,10 @@
 package com.qucoon.hospitalmanagement.repository.implementation;
 import com.qucoon.hospitalmanagement.exception.DatabaseOperationException;
 import com.qucoon.hospitalmanagement.mapper.MedicationMapper;
+import com.qucoon.hospitalmanagement.mapper.MedicationRevenueMapper;
 import com.qucoon.hospitalmanagement.model.entity.Medication;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationRepository;
+import com.qucoon.hospitalmanagement.repository.query.ItemQuery;
 import com.qucoon.hospitalmanagement.repository.query.MedicationQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -62,6 +64,24 @@ public class MedicationRepositoryImpl implements MedicationRepository {
             return jdbcTemplate.queryForObject(MedicationQuery.GET_MEDICATION_BY_ID, params, new MedicationMapper());
         } catch (EmptyResultDataAccessException e){
             return null;
+        } catch (Exception e) {
+            logger.error("Database operation failed: {}", e.getMessage(), e);
+            System.err.println("Database operation failed: {}" + e.getMessage() + e);
+            // Throw a custom exception
+            throw new DatabaseOperationException("Failed to get medication from the database", e);
+        }
+    }
+
+    @Override
+    public Double getMedicationRevenueByIdAndDate(int medicationId, String startDate, String endDate) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("medicationId", medicationId)
+                .addValue("startDate", startDate)
+                .addValue("endDate", endDate);
+        try {
+            return jdbcTemplate.queryForObject(ItemQuery.GET_TOTAL_REVENUE_FROM_MEDICATION_SALES_PER_TIME, params, Double.class);
+        } catch (EmptyResultDataAccessException e){
+            return 0.00;
         } catch (Exception e) {
             logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
