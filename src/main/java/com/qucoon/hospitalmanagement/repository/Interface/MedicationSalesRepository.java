@@ -17,7 +17,9 @@ public interface MedicationSalesRepository {
 
     int createMedicationSales(MedicationSales medicationSales);
 
-    int createMedicationSalesItems(int medicationSalesId, List<MedicationList> medicationIds);
+    List<String> checkMedicationQuantity(List<MedicationList> medicationIdAndQuantity);
+
+    int createMedicationSalesItems(int medicationSalesId, List<MedicationList> medicationIdAndQuantity);
 
     int updateMedicationSales(String medicationSalesId, MedicationSales medicationSales);
 

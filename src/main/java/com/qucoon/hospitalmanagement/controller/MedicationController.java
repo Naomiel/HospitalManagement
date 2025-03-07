@@ -5,15 +5,22 @@ import com.qucoon.hospitalmanagement.model.request.MedicationAddRequest;
 import com.qucoon.hospitalmanagement.model.response.GenericResponse;
 import com.qucoon.hospitalmanagement.model.response.GetAllMedicationsResponse;
 import com.qucoon.hospitalmanagement.model.response.GetMedicationResponse;
+import com.qucoon.hospitalmanagement.model.response.GetMedicationRevenueResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/medication")
 public class MedicationController {
     private final MedicationService medicationService;
+    private static final DateTimeFormatter MYSQL_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
     @Autowired
     public MedicationController(MedicationService medicationService) {
@@ -48,5 +55,14 @@ public class MedicationController {
     @GetMapping("/get-by-id/{medicationId}")
     public ResponseEntity<GetMedicationResponse> getMedicationById(@PathVariable int medicationId) {
         return ResponseEntity.ok(medicationService.getMedicationById(medicationId));
+    }
+
+    @GetMapping("/get-medication-revenue/{medicationId}")
+    public ResponseEntity<GetMedicationRevenueResponse> getMedicationRevenue(@PathVariable int medicationId,
+                                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+                                                                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate) {
+        String startDateStr = startDate.format(MYSQL_TIMESTAMP_FORMAT);
+        String endDateStr = endDate.format(MYSQL_TIMESTAMP_FORMAT);
+        return ResponseEntity.ok(medicationService.getMedicationRevenueByIdAndDate(medicationId, startDateStr, endDateStr));
     }
 }

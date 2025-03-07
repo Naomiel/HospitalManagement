@@ -3,9 +3,7 @@ package com.qucoon.hospitalmanagement.Service;
 import com.google.gson.Gson;
 import com.qucoon.hospitalmanagement.model.entity.Medication;
 import com.qucoon.hospitalmanagement.model.request.MedicationAddRequest;
-import com.qucoon.hospitalmanagement.model.response.GenericResponse;
-import com.qucoon.hospitalmanagement.model.response.GetAllMedicationsResponse;
-import com.qucoon.hospitalmanagement.model.response.GetMedicationResponse;
+import com.qucoon.hospitalmanagement.model.response.*;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +56,20 @@ public class MedicationService {
             logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
             return new GetMedicationResponse("106", "failed", "Internal Server Error", null);
+        }
+    }
+
+    public GetMedicationRevenueResponse getMedicationRevenueByIdAndDate(int medicationId, String startDate, String endDate) {
+        try {
+            var resp = medicationRepository.getMedicationRevenueByIdAndDate(medicationId, startDate, endDate);
+            if (resp == 0.00) {
+                return new GetMedicationRevenueResponse("00", "success", "This medication has not generated any revenue so far", null);
+            }
+            return new GetMedicationRevenueResponse("00", "success", "This medication has generated " + resp + " revenue so far", new MedicationRevenueResp(resp));
+        } catch (Exception e) {
+            logger.error("Database operation failed: {}", e.getMessage(), e);
+            System.err.println("Database operation failed: {}" + e.getMessage() + e);
+            return new GetMedicationRevenueResponse("106", "failed", "Internal Server Error", null);
         }
     }
 

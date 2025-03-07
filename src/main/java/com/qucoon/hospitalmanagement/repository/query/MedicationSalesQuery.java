@@ -12,7 +12,7 @@ public class MedicationSalesQuery {
             VALUES (:medicationSalesPatientId, :medicationSalesStaffId, COALESCE(:medicationSalesStatus,'ACTIVE'), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
             """;
     public static final String GET_LAST_INSERT_ID = "SELECT LAST_INSERT_ID()";
-    //public static final String UPDATE_MEDICATION_SALES = "UPDATE MedicationSales SET medicationSalesPatientId = :medicationSalesPatientId, medicationSalesStaffId = :medicationSalesStaffId, medicationSalesUpdatedAt = NOW() WHERE medicationSalesId=:medicationSalesId";
+    public static final String UPDATE_MEDICATION_SALES = "UPDATE MedicationSales SET medicationSalesPatientId = :medicationSalesPatientId, medicationSalesStaffId = :medicationSalesStaffId, medicationSalesUpdatedAt = NOW() WHERE medicationSalesId=:medicationSalesId";
     public static final String GET_ALL_MEDICATION_SALES = "SELECT * FROM MedicationSales";
     public static final String GET_ALL_ACTIVE_MEDICATION_SALES = "SELECT * FROM MedicationSales WHERE medicationSalesStatus='ACTIVE'";
     public static final String GET_MEDICATION_SALES_BY_ID = "SELECT * FROM MedicationSales WHERE medicationSalesId=:medicationSalesId";
@@ -45,7 +45,7 @@ public class MedicationSalesQuery {
             JOIN Staff s ON ms.medicationSalesStaffId = s.staffId
             WHERE ms.medicationSalesId=:medicationSalesId;""";
 
-    public static String buildUpdateQuery(MedicationSales request, String medicationSalesId) {
+    /*public static String buildUpdateQuery(MedicationSales request, String medicationSalesId) {
         StringBuilder query = new StringBuilder("UPDATE MedicationSales SET ");
         Map<String, Object> params = new HashMap<>();
 
@@ -67,7 +67,7 @@ public class MedicationSalesQuery {
         params.put("medicationSalesId", medicationSalesId);
 
         return query.toString();
-    }
+    }*/
 
 
 

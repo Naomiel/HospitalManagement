@@ -13,6 +13,7 @@ public class MedicationSalesMapper implements RowMapper<MedicationSales> {
                 .medicationSalesId(rs.getInt("medicationSalesId"))
                 .medicationSalesPatientId(rs.getInt("medicationSalesPatientId"))
                 .medicationSalesStaffId(rs.getInt("medicationSalesStaffId"))
+                .medicationSalesStatus(rs.getString("medicationSalesStatus"))
                 .medicationSalesCreatedAt(rs.getString("medicationSalesCreatedAt"))
                 .medicationSalesUpdatedAt(rs.getString("medicationSalesUpdatedAt"))
                 .build();
