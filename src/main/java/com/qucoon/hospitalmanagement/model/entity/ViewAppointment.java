@@ -17,7 +17,7 @@ public class ViewAppointment {
     private int patientAge;
     private String staffFirstName;
     private String staffLastName;
-    private int appointmentId;  // Changed from appointmentId to id for consistency with DB
+    private int appointmentId;
     private int appointmentPatientId;
     private int appointmentStaffId;
     private Timestamp appointmentDate;

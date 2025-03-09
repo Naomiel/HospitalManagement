@@ -10,9 +10,9 @@ public interface PatientRepository {
 
     Patient getPatientById(int patientId);
 
-    int createPatient(Patient patient);
+    int createPatient(PatientCreateRequest patient);
 
-    int updatePatient(int patientId, Patient patient);
+    int updatePatient(int patientId, PatientCreateRequest patient);
 
     int deletePatient(int patientId);
 }

@@ -3,6 +3,7 @@ package com.qucoon.hospitalmanagement.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.qucoon.hospitalmanagement.enums.Gender;
+import com.qucoon.hospitalmanagement.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class Patient {
     private Gender gender;
     private String address;
     private String emergencyContact;
-    private String status;
+    private Status status;
     private String createdAt;
     private String updatedAt;
 

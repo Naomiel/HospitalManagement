@@ -1,6 +1,7 @@
 package com.qucoon.hospitalmanagement.model.request;
 
 import com.qucoon.hospitalmanagement.enums.Gender;
+import com.qucoon.hospitalmanagement.enums.Status;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,4 +32,5 @@ public class PatientCreateRequest {
     private String address;
     @NotBlank(message = "Emergency Contact is required")
     private String emergencyContact;
+    private Status status;
 }

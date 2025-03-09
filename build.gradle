@@ -41,10 +41,12 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.36'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'ma.glasnost.orika:orika-core:1.5.4'
 }
 
 
 
 tasks.named('test') {
     useJUnitPlatform()
+    jvmArgs '--add-opens=java.base/java.lang=ALL-UNNAMED'
 }

@@ -3,16 +3,15 @@ package com.qucoon.hospitalmanagement.repository.implementation;
 
 import com.qucoon.hospitalmanagement.mapper.PatientRowMapper;
 import com.qucoon.hospitalmanagement.model.entity.Patient;
+import com.qucoon.hospitalmanagement.model.request.PatientCreateRequest;
 import com.qucoon.hospitalmanagement.repository.Interface.PatientRepository;
 import com.qucoon.hospitalmanagement.repository.query.PatientQuery;
-import com.qucoon.hospitalmanagement.repository.query.StaffQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import java.sql.Timestamp;
 
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public int createPatient(Patient patient) {
+    public int createPatient(PatientCreateRequest patient) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("patientFirstName", patient.getFirstName())
                 .addValue("patientLastName", patient.getLastName())
@@ -45,7 +44,7 @@ public class PatientRepositoryImpl implements PatientRepository {
                 .addValue("patientGender", patient.getGender().name())
                 .addValue("patientAddress", patient.getAddress())
                 .addValue("patientEmergencyContact", patient.getEmergencyContact())
-                .addValue("patientStatus", patient.getStatus());
+                .addValue("patientStatus", patient.getStatus().name());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(PatientQuery.INSERT_PATIENT, params, keyHolder, new String[]{"patientId"}); // Ensure "id" is the primary key column
@@ -54,7 +53,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     }
 
     @Override
-    public int updatePatient(int patientId, Patient patient) {
+    public int updatePatient(int patientId, PatientCreateRequest patient) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("patientId", patientId)
                 .addValue("patientFirstName", patient.getFirstName())

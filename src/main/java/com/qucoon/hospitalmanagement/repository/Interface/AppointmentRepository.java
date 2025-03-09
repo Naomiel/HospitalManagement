@@ -7,7 +7,7 @@ import com.qucoon.hospitalmanagement.model.request.AppointmentCreateRequest;
 import java.util.List;
 
 public interface AppointmentRepository {
-    int createAppointment(Appointment appointment);
+    int createAppointment(AppointmentCreateRequest appointment);
     List<ViewAppointment> getAllAppointments();
     ViewAppointment getAppointmentById(int id);
     int updateAppointment(int id, AppointmentCreateRequest appointment);

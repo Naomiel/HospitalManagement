@@ -1,6 +1,6 @@
 package com.qucoon.hospitalmanagement.controller;
 
-import com.qucoon.hospitalmanagement.Service.MedicationSalesService;
+import com.qucoon.hospitalmanagement.service.MedicationSalesService;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesRequest;
 import com.qucoon.hospitalmanagement.model.response.GenericResponse;

@@ -1,4 +1,4 @@
-package com.qucoon.hospitalmanagement.Service;
+package com.qucoon.hospitalmanagement.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

@@ -1,6 +1,7 @@
 package com.qucoon.hospitalmanagement.mapper;
 
 import com.qucoon.hospitalmanagement.enums.Gender;
+import com.qucoon.hospitalmanagement.enums.Status;
 import com.qucoon.hospitalmanagement.model.entity.Patient;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -20,7 +21,7 @@ public class PatientRowMapper implements RowMapper<Patient> {
                 .gender(Gender.valueOf(rs.getString("patientGender")))
                 .address(rs.getString("patientAddress"))
                 .emergencyContact(rs.getString("patientEmergencyContact"))
-                .status(rs.getString("patientStatus"))
+                .status(Status.valueOf(rs.getString("patientStatus")))
                 .createdAt(rs.getString("patientCreatedAt"))
                 .updatedAt(rs.getString("patientUpdatedAt"))
                 .build();
