@@ -1,16 +1,10 @@
-package com.qucoon.hospitalmanagement.Service;
+package com.qucoon.hospitalmanagement.service;
 
 
 import com.google.gson.Gson;
 import com.qucoon.hospitalmanagement.model.entity.Equipment;
-import com.qucoon.hospitalmanagement.model.entity.Equipment;
-import com.qucoon.hospitalmanagement.model.entity.Equipment;
-import com.qucoon.hospitalmanagement.model.entity.Equipment;
 import com.qucoon.hospitalmanagement.model.request.EquipmentCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.EquipmentUpdateRequest;
-import com.qucoon.hospitalmanagement.model.response.*;
-import com.qucoon.hospitalmanagement.model.response.EquipmentResponse;
-import com.qucoon.hospitalmanagement.model.response.EquipmentResponse;
 import com.qucoon.hospitalmanagement.model.response.EquipmentResponse;
 import com.qucoon.hospitalmanagement.repository.Interface.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

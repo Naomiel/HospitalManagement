@@ -3,7 +3,6 @@ package com.qucoon.hospitalmanagement.mapper;
 import com.qucoon.hospitalmanagement.model.entity.Appointment;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

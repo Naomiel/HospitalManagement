@@ -1,4 +1,4 @@
-package com.qucoon.hospitalmanagement.Service;
+package com.qucoon.hospitalmanagement.service;
 
 import com.google.gson.Gson;
 import com.qucoon.hospitalmanagement.model.entity.Item;
@@ -6,7 +6,6 @@ import com.qucoon.hospitalmanagement.model.request.ItemCreateRequest;
 import com.qucoon.hospitalmanagement.model.response.GenericResponse;
 import com.qucoon.hospitalmanagement.model.response.GetAllItemsResponse;
 import com.qucoon.hospitalmanagement.model.response.GetItemResponse;
-import com.qucoon.hospitalmanagement.model.response.GetMedicationResponse;
 import com.qucoon.hospitalmanagement.repository.Interface.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

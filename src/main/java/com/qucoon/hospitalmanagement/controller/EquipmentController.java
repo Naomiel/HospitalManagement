@@ -1,24 +1,14 @@
 package com.qucoon.hospitalmanagement.controller;
 
-import com.qucoon.hospitalmanagement.Service.EquipmentService;
-import com.qucoon.hospitalmanagement.model.entity.Equipment;
+import com.qucoon.hospitalmanagement.service.EquipmentService;
 import com.qucoon.hospitalmanagement.model.request.EquipmentCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.EquipmentUpdateRequest;
 import com.qucoon.hospitalmanagement.model.response.EquipmentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/equipment")

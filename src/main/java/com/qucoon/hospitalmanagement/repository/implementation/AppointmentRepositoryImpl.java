@@ -6,9 +6,12 @@ import com.qucoon.hospitalmanagement.model.entity.ViewAppointment;
 import com.qucoon.hospitalmanagement.model.request.AppointmentCreateRequest;
 import com.qucoon.hospitalmanagement.repository.Interface.AppointmentRepository;
 import com.qucoon.hospitalmanagement.repository.query.AppointmentQuery;
+import com.qucoon.hospitalmanagement.repository.query.PatientQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
@@ -21,14 +24,17 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public int createAppointment(Appointment appointment) {
+    public int createAppointment(AppointmentCreateRequest appointment) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("appointmentPatientId", appointment.getAppointmentPatientId())
                 .addValue("appointmentStaffId", appointment.getAppointmentStaffId())
                 .addValue("appointmentDate", appointment.getAppointmentDate())
                 .addValue("appointmentStatus", appointment.getAppointmentStatus())
                 .addValue("appointmentCreatedAt", new Timestamp(System.currentTimeMillis()));
-        return jdbcTemplate.update(AppointmentQuery.INSERT_APPOINTMENT, params);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(AppointmentQuery.INSERT_APPOINTMENT, params, keyHolder, new String[]{"appointmentId"}); // Ensure "id" is the primary key column
+
+        return keyHolder.getKey() != null ? keyHolder.getKey().intValue() : 0;
     }
 
     @Override
@@ -46,8 +52,8 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
     public int updateAppointment(int appointmentId, AppointmentCreateRequest appointment) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("appointmentId", appointmentId)
-                .addValue("patientId", appointment.getAppointmentPatientId())
-                .addValue("doctorId", appointment.getAppointmentStaffId())
+                .addValue("appointmentPatientId", appointment.getAppointmentPatientId())
+                .addValue("appointmentStaffId", appointment.getAppointmentStaffId())
                 .addValue("appointmentDate", appointment.getAppointmentDate())
                 .addValue("updatedAt", new Timestamp(System.currentTimeMillis()));
         return jdbcTemplate.update(AppointmentQuery.UPDATE_APPOINTMENT, params);

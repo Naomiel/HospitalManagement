@@ -1,10 +1,5 @@
 package com.qucoon.hospitalmanagement.repository.query;
 
-import com.qucoon.hospitalmanagement.model.entity.Patient;
-import com.qucoon.hospitalmanagement.model.entity.Staff;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PatientQuery {
     public static final String INSERT_PATIENT = """
@@ -16,19 +11,9 @@ public class PatientQuery {
                         NOW(), NOW())
             """;
 
-    public static final String GET_ALL = """
-                SELECT patientId, patientFirstName, patientLastName, patientEmail, patientPhoneNumber,
-                       patientGender, patientAge, patientAddress, patientEmergencyContact, patientStatus,
-                       patientCreatedAt, patientUpdatedAt
-                FROM Patient
-            """;
+    public static final String GET_ALL = "SELECT * FROM Patient where patientStatus = 'ACTIVE'";
 
-    public static final String GET_BY_ID = """
-                SELECT patientId, patientFirstName, patientLastName, patientEmail, patientPhoneNumber,
-                       patientGender, patientAge, patientAddress, patientEmergencyContact, patientStatus,
-                       patientCreatedAt, patientUpdatedAt
-                FROM Patient WHERE patientId = :patientId
-            """;
+    public static final String GET_BY_ID = "SELECT * FROM Patient WHERE patientId=:patientId AND patientStatus='ACTIVE'";
 
     public static final String UPDATE_PATIENT = """
                 UPDATE Patient
