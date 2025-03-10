@@ -11,13 +11,14 @@ public class EquipmentQuery {
     VALUES (:equipmentName, :equipmentCategory, :equipmentQuantity, :equipmentPurchaseDate, 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     """;
 
+    public static final String UPDATE_EQUIPMENT = "UPDATE Equipment SET equipmentName = :equipmentName, equipmentCategory = :equipmentCategory, equipmentQuantity = :equipmentQuantity, equipmentPurchaseDate = :equipmentPurchaseDate, equipmentStatus = :equipmentStatus, equipmentUpdatedAt = CURRENT_TIMESTAMP WHERE equipmentId = :equipmentId";
     public static final String GET_ALL_EQUIPMENT = "SELECT * FROM Equipment where equipmentStatus != 'deleted'";
 
     public static final String GET_EQUIPMENT_BY_ID = "SELECT * FROM Equipment WHERE equipmentId = :equipmentId and equipmentStatus != 'deleted'";
 
     public static final String DELETE_EQUIPMENT = "Update Equipment set equipmentStatus = 'deleted' WHERE equipmentId = :equipmentId";
 
-    public static String buildUpdateQuery(Equipment request, String equipment_id) {
+    /*public static String buildUpdateQuery(Equipment request, String equipment_id) {
         StringBuilder query = new StringBuilder("UPDATE Equipment SET ");
         Map<String, Object> params = new HashMap<>();
 
@@ -50,7 +51,7 @@ public class EquipmentQuery {
         params.put("equipmentId", equipment_id);
 
         return query.toString();
-    }
+    }*/
 
 
 }
