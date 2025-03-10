@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppResponse<T> {
-    public String responseCode;
-    public String responseStatus;
-    public String responseMessage;
-    public T data;
+    private String responseCode;
+    private String responseStatus;
+    private String responseMessage;
+    private T data;
 }

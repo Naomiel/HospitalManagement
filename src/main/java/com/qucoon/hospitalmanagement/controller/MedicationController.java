@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@RequestMapping("/medication")
+@RequestMapping("api/v1/medication")
 public class MedicationController {
     private final MedicationService medicationService;
     private static final DateTimeFormatter MYSQL_TIMESTAMP_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -32,12 +32,12 @@ public class MedicationController {
         return ResponseEntity.ok(medicationService.createMedication(request));
     }
 
-    @PatchMapping("/update-medication/{medicationId}")
+    @PatchMapping("/update/{medicationId}")
     public ResponseEntity<GenericResponse> updateMedication(@Valid @RequestBody MedicationAddRequest request, @PathVariable String medicationId){
         return ResponseEntity.ok(medicationService.updateMedication(medicationId,request));
     }
 
-    @DeleteMapping("/delete-medication/{medicationId}")
+    @DeleteMapping("/delete/{medicationId}")
     public ResponseEntity<GenericResponse> deleteMedication(@PathVariable int medicationId){
         return ResponseEntity.ok(medicationService.deleteMedication(medicationId));
     }
@@ -52,12 +52,12 @@ public class MedicationController {
         return ResponseEntity.ok(medicationService.getAllActiveMedication());
     }
 
-    @GetMapping("/get-by-id/{medicationId}")
+    @GetMapping("/get/{medicationId}")
     public ResponseEntity<GetMedicationResponse> getMedicationById(@PathVariable int medicationId) {
         return ResponseEntity.ok(medicationService.getMedicationById(medicationId));
     }
 
-    @GetMapping("/get-medication-revenue/{medicationId}")
+    @GetMapping("/get-medication/{medicationId}")
     public ResponseEntity<GetMedicationRevenueResponse> getMedicationRevenue(@PathVariable int medicationId,
                                                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
                                                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate) {

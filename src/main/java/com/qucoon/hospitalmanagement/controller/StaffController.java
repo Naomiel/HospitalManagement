@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/staff")
+@RequestMapping("api/v1/staff")
 public class StaffController {
     private final StaffService staffService;
 
@@ -27,13 +27,13 @@ public class StaffController {
 
     }
 
-    @GetMapping("/view")
+    @GetMapping("/all")
     public ResponseEntity<StaffResponse> getAllStaff() {
         var response = staffService.getAllStaff();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/view/{staffId}")
+    @GetMapping("/get/{staffId}")
     public ResponseEntity<StaffResponse> getStaffById(@PathVariable int staffId) {
 
         var response = staffService.getStaffById(staffId);

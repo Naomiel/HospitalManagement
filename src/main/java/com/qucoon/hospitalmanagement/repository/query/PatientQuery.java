@@ -8,7 +8,7 @@ public class PatientQuery {
                                      patientCreatedAt, patientUpdatedAt)
                 VALUES (:patientFirstName, :patientLastName, :patientEmail, :patientPhoneNumber,
                         :patientGender, :patientAge, :patientAddress, :patientEmergencyContact,COALESCE(:patientStatus,'ACTIVE'),
-                        NOW(), NOW())
+                        CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
             """;
 
     public static final String GET_ALL = "SELECT * FROM Patient where patientStatus = 'ACTIVE'";
@@ -26,7 +26,7 @@ public class PatientQuery {
                     patientAddress = :patientAddress,
                     patientEmergencyContact = :patientEmergencyContact,
                     patientStatus = COALESCE(:patientStatus,'ACTIVE'),
-                    patientUpdatedAt = NOW()
+                    patientUpdatedAt = CURRENT_TIMESTAMP
                 WHERE patientId = :patientId
             """;
 

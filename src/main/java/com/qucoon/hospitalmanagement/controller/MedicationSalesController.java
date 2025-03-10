@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/medicationSales")
+@RequestMapping("api/v1/medicationSales")
 public class MedicationSalesController {
     private final MedicationSalesService medicationSalesService;
 
@@ -27,13 +27,13 @@ public class MedicationSalesController {
         return ResponseEntity.ok(medicationSalesService.createMedicationSales(request));
     }
 
-    @PatchMapping("/update-medicationSales/{medicationSalesId}")
+    @PatchMapping("/update/{medicationSalesId}")
     public ResponseEntity<GenericResponse> updateMedicationSales(@Valid @RequestBody MedicationSalesRequest request, @PathVariable String medicationSalesId){
         return ResponseEntity.ok(medicationSalesService.updateMedicationSales(medicationSalesId,request));
 
     }
 
-    @DeleteMapping("/delete-medicationSales/{medicationSalesId}")
+    @DeleteMapping("/delete/{medicationSalesId}")
     public ResponseEntity<GenericResponse> deleteMedicationSales(@PathVariable int medicationSalesId){
         return ResponseEntity.ok(medicationSalesService.deleteMedicationSales(medicationSalesId));
     }
@@ -48,7 +48,7 @@ public class MedicationSalesController {
         return ResponseEntity.ok(medicationSalesService.getAllActiveMedicationSales());
     }
 
-    @GetMapping("/get-by-id/{medicationSalesId}")
+    @GetMapping("/get/{medicationSalesId}")
     public ResponseEntity<GetMedicationSalesResponse> getMedicationSalesById(@PathVariable int medicationSalesId){
         return ResponseEntity.ok(medicationSalesService.getMedicationSalesById(medicationSalesId));
     }

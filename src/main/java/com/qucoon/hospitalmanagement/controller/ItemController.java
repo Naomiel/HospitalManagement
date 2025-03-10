@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/items")
+@RequestMapping("api/v1/items")
 public class ItemController {
     private final ItemService itemService;
 
@@ -27,12 +27,12 @@ public class ItemController {
         return ResponseEntity.ok(itemService.createItem(request));
     }
 
-    @PatchMapping("/update-item/{itemId}")
+    @PatchMapping("/update/{itemId}")
     public ResponseEntity<GenericResponse> updateItem(@Valid @RequestBody ItemCreateRequest request, @PathVariable String itemId){
         return ResponseEntity.ok(itemService.updateItem(itemId,request));
     }
 
-    @DeleteMapping("/delete-item/{itemId}")
+    @DeleteMapping("/delete/{itemId}")
     public ResponseEntity<GenericResponse> deleteItem(@PathVariable int itemId){
         return ResponseEntity.ok(itemService.deleteItem(itemId));
     }
@@ -47,7 +47,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getAllActiveItem());
     }
 
-    @GetMapping("/get-by-id/{itemId}")
+    @GetMapping("/get/{itemId}")
     public ResponseEntity<GetItemResponse> getItemById(@PathVariable int itemId) {
         return ResponseEntity.ok(itemService.getItemById(itemId));
     }
