@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/equipment")
+@RequestMapping("api/v1/equipment")
 public class EquipmentController {
     private final EquipmentService equipmentService;
 
