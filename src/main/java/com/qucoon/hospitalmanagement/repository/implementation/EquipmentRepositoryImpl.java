@@ -76,8 +76,8 @@ public class EquipmentRepositoryImpl implements EquipmentRepository {
                     .addValue("equipmentPurchaseDate",Equipment.getEquipmentPurchaseDate())
                     .addValue("equipmentStatus",Equipment.getEquipmentStatus());
 
-            var query = EquipmentQuery.buildUpdateQuery(Equipment, String.valueOf(equipmentId));
-            return jdbcTemplate.update(query, params);
+            //var query = EquipmentQuery.buildUpdateQuery(Equipment, String.valueOf(equipmentId));
+            return jdbcTemplate.update(EquipmentQuery.UPDATE_EQUIPMENT, params);
         }
         catch(Exception e){
             System.out.println(">> EXCEPTION ");

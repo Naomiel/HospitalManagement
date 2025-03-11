@@ -17,17 +17,17 @@ public class StaffQuery {
 
     public static final String GET_STAFF_BY_ID = "SELECT * FROM Staff WHERE staffId = :staffId and staffStatus != 'deleted'";
 
-//    public static final String UPDATE_STAFF = """
-//    UPDATE Staff
-//    SET staffFirstName = :staffFirstName, staffLastName = :staffLastName, staffRole = :staffRole, staffDepartment = :staffDepartment,
-//        staffPhoneNumber = :staffPhoneNumber, staffEmail = :staffEmail, staffSalary = :staffSalary, staffHireDate = :staffHireDate,
-//        staffStatus = :staffStatus, staffUpdatedAt = CURRENT_TIMESTAMP
-//    WHERE staffId = :staffId
-//    """;
+    public static final String UPDATE_STAFF = """
+    UPDATE Staff
+    SET staffFirstName = :staffFirstName, staffLastName = :staffLastName, staffRole = :staffRole, staffDepartment = :staffDepartment,
+        staffPhoneNumber = :staffPhoneNumber, staffEmail = :staffEmail, staffSalary = :staffSalary, staffHireDate = :staffHireDate,
+        staffStatus = :staffStatus, staffUpdatedAt = CURRENT_TIMESTAMP
+    WHERE staffId = :staffId
+    """;
 
     public static final String DELETE_STAFF = "Update Staff set staffStatus = 'deleted' WHERE staffId = :staffId";
 
-    public static String buildUpdateQuery(Staff request, String staff_id) {
+    /*public static String buildUpdateQuery(Staff request, String staff_id) {
         StringBuilder query = new StringBuilder("UPDATE Staff SET ");
         Map<String, Object> params = new HashMap<>();
 
@@ -76,6 +76,6 @@ public class StaffQuery {
         params.put("staffId", staff_id);
 
         return query.toString();
-    }
+    }*/
 
 }

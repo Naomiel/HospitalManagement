@@ -3,20 +3,17 @@ package com.qucoon.hospitalmanagement.service;
 import com.google.gson.Gson;
 import com.qucoon.hospitalmanagement.model.entity.Item;
 import com.qucoon.hospitalmanagement.model.request.ItemCreateRequest;
-import com.qucoon.hospitalmanagement.model.response.GenericResponse;
-import com.qucoon.hospitalmanagement.model.response.GetAllItemsResponse;
-import com.qucoon.hospitalmanagement.model.response.GetItemResponse;
+import com.qucoon.hospitalmanagement.model.response.AppResponse;
 import com.qucoon.hospitalmanagement.repository.Interface.ItemRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
-    private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 
 
     @Autowired
@@ -24,90 +21,84 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public GetAllItemsResponse getAllItem(){
+    public AppResponse<List<Item>> getAllItem(){
         try{
         var resp =  itemRepository.getAllItems();
-        return new GetAllItemsResponse("00", "success", "Items Fetched Successfully",resp);
+        return new AppResponse<>("00", "success", "Items Fetched Successfully",resp);
     } catch (Exception e) {
-        logger.error("Database operation failed: {}", e.getMessage(), e);
         System.err.println("Database operation failed: {}" + e.getMessage() + e);
-        return new GetAllItemsResponse("106", "failed", "Internal Server Error", null);
+        return new AppResponse<>("106", "failed", "Internal Server Error", null);
     }
     }
 
-    public GetAllItemsResponse getAllActiveItem(){
+    public AppResponse<List<Item>> getAllActiveItem(){
         try {
             var resp =  itemRepository.getAllActiveItems();
-            return new GetAllItemsResponse("00", "success", "Items Fetched Successfully",resp);
+            return new AppResponse<>("00", "success", "Items Fetched Successfully",resp);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GetAllItemsResponse("106", "failed", "Internal Server Error", null);
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
 
-    public GetItemResponse getItemById(int id){
+    public AppResponse<Item> getItemById(int id){
         try {
             var resp =  itemRepository.getItemById(id);
             if (resp == null) {
-                return new GetItemResponse("00", "failed", "Item Not Found or has been deleted", null);
+                return new AppResponse<>("00", "failed", "Item Not Found or has been deleted", null);
             }
-            return new GetItemResponse("00", "success", "Item Fetched Successfully",resp);
+            return new AppResponse<>("00", "success", "Item Fetched Successfully",resp);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GetItemResponse("106", "failed", "Internal Server Error", null);
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse createItem(ItemCreateRequest request){
+    public AppResponse<Void> createItem(ItemCreateRequest request){
         Gson gson = new Gson();
         var item = gson.fromJson(gson.toJson(request), Item.class);
         try {
             var resp =  itemRepository.createItem(item);
             if (resp > 0){
-                return new GenericResponse("00", "success", "Item Created Successfully");
+                return new AppResponse<>("00", "success", "Item Created Successfully", null);
             } else {
-                return new GenericResponse("106", "failed", "Please Enter valid Request body and ensure that medicationSales and medication ids exist");
+                return new AppResponse<>("106", "failed", "Please Enter valid Request body and ensure that medicationSales and medication ids exist", null);
             }
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse updateItem(String id, ItemCreateRequest request){
+    public AppResponse<Void> updateItem(String id, ItemCreateRequest request){
         Gson gson = new Gson();
         var item = gson.fromJson(gson.toJson(request), Item.class);
         var Id = gson.fromJson(gson.toJson(id), String.class);
         try {
             var resp =  itemRepository.updateItem(Id, item);
             if (resp > 0){
-                return new GenericResponse("00", "success", "Item updated Successfully");
+                return new AppResponse<>("00", "success", "Item updated Successfully", null);
             } else {
-                return new GenericResponse("106", "failed", "Please Enter valid Request body and ensure that medicationSales and medication ids exist");
+                return new AppResponse<>("106", "failed", "Please Enter valid Request body and ensure that medicationSales and medication ids exist", null);
             }
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse deleteItem(int id) {
+    public AppResponse<Void> deleteItem(int id) {
         try {
             var resp =  itemRepository.deleteItem(id);
             if (resp > 0){
-                return new GenericResponse("00", "success", "Medication Deleted Successfully");
+                return new AppResponse<>("00", "success", "Medication Deleted Successfully", null);
             } else {
-                return new GenericResponse("106", "failed", "Please Enter valid Request body and ensure that item id exist");
+                return new AppResponse<>("106", "failed", "Please Enter valid Request body and ensure that item id exist", null);
             }
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 }

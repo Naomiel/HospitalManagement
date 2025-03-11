@@ -3,13 +3,12 @@ package com.qucoon.hospitalmanagement.service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qucoon.hospitalmanagement.model.entity.MedicationSales;
+import com.qucoon.hospitalmanagement.model.entity.ViewMedicationSales;
 import com.qucoon.hospitalmanagement.model.request.MedicationList;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesCreateRequest;
 import com.qucoon.hospitalmanagement.model.request.MedicationSalesRequest;
 import com.qucoon.hospitalmanagement.model.response.*;
 import com.qucoon.hospitalmanagement.repository.Interface.MedicationSalesRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ import java.util.List;
 @Service
 public class MedicationSalesService {
     private final MedicationSalesRepository medicationSalesRepository;
-    private static final Logger logger = LoggerFactory.getLogger(MedicationSalesService.class);
 
 
     @Autowired
@@ -26,42 +24,39 @@ public class MedicationSalesService {
         this.medicationSalesRepository = medicationSalesRepository;
     }
 
-    public GetAllMedicationSalesResponse getAllMedicationSales(){
+    public AppResponse<List<MedicationSales>> getAllMedicationSales(){
         try {
             var resp = medicationSalesRepository.getAllMedicationSales();
-            return new GetAllMedicationSalesResponse("00", "success", "MedicationSales Fetched successfully", resp);
+            return new AppResponse<>("00", "success", "MedicationSales Fetched successfully", resp);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GetAllMedicationSalesResponse("106", "failed", "Internal Server Error", null);
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
 
     }
 
-    public GetAllMedicationSalesViewResponse getAllActiveMedicationSales(){
+    public AppResponse<List<ViewMedicationSales>> getAllActiveMedicationSales(){
         try {
             var resp = medicationSalesRepository.getAllActiveMedicationSales();
-            return new GetAllMedicationSalesViewResponse("00", "success", "MedicationSales Fetched successfully", resp);
+            return new AppResponse<>("00", "success", "MedicationSales Fetched successfully", resp);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GetAllMedicationSalesViewResponse("106", "failed", "Internal Server Error", null);
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
 
-    public GetMedicationSalesResponse getMedicationSalesById(int id){
+    public AppResponse<MedicationSalesResponse> getMedicationSalesById(int id){
         try {
             var resp = medicationSalesRepository.getMedicationSalesById(id);
-            return new GetMedicationSalesResponse("00", "success", "MedicationSales Fetched successfully", resp);
+            return new AppResponse<>("00", "success", "MedicationSales Fetched successfully", resp);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GetMedicationSalesResponse("106", "failed", "Internal Server Error", null);
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse createMedicationSales(MedicationSalesCreateRequest originalRequest){
+    public AppResponse<Void> createMedicationSales(MedicationSalesCreateRequest originalRequest){
         Gson gson = new Gson();
         MedicationSalesRequest request = new MedicationSalesRequest(originalRequest.getMedicationSalesPatientId(), originalRequest.getMedicationSalesStaffId());
         var medicationSales = gson.fromJson(gson.toJson(request), MedicationSales.class);
@@ -72,50 +67,47 @@ public class MedicationSalesService {
             if (quantityNotInStocklist.isEmpty()) {
                 int medicationSalesId = medicationSalesRepository.createMedicationSales(medicationSales);
                 if (medicationSalesId == -1) {
-                    return new GenericResponse("106", "failed", "Failed to create MedicationSales record. Please Enter valid Request body and ensure that all required fields are inputed");
+                    return new AppResponse<>("106", "failed", "Failed to create MedicationSales record. Please Enter valid Request body and ensure that all required fields are inputed", null);
                 }
                 var createMedicationSalesItem = medicationSalesRepository.createMedicationSalesItems(medicationSalesId, list);
                 if (createMedicationSalesItem > 0) {
-                    return new GenericResponse("00", "success", "MedicationSales Created Successfully");
+                    return new AppResponse<>("00", "success", "MedicationSales Created Successfully", null);
                 } else {
                     medicationSalesRepository.deleteMedicationSales(medicationSalesId);
-                    return new GenericResponse("106", "failed", "Please Enter valid Request body and ensure that the list is not empty and all required fields are inputed");
+                    return new AppResponse<>("106", "failed", "Please Enter valid Request body and ensure that the list is not empty and all required fields are inputed", null);
                 }
             }
-            return new GenericResponse("106", "failed", String.join(", ", quantityNotInStocklist));
+            return new AppResponse<>("106", "failed", String.join(", ", quantityNotInStocklist), null);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse updateMedicationSales(String id, MedicationSalesRequest request){
+    public AppResponse<Void> updateMedicationSales(String id, MedicationSalesRequest request){
         Gson gson = new Gson();
         var medicationSales = gson.fromJson(gson.toJson(request), MedicationSales.class);
         var Id = gson.fromJson(gson.toJson(id), String.class);
         try {
             var resp =  medicationSalesRepository.updateMedicationSales(Id, medicationSales);
             if (resp > 0){
-                return new GenericResponse("00", "success", "MedicationSales Updated Successfully");
+                return new AppResponse<>("00", "success", "MedicationSales Updated Successfully", null);
             } else {
-                return new GenericResponse("106", "failed", "Please Enter valid Request body and ensure that all required fields are inputed");
+                return new AppResponse<>("106", "failed", "Please Enter valid Request body and ensure that all required fields are inputed", null);
             }
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 
-    public GenericResponse deleteMedicationSales(int id){
+    public AppResponse<Void> deleteMedicationSales(int id){
         try {
             var resp =  medicationSalesRepository.deleteMedicationSales(id);
-            return new GenericResponse("00", "success", "MedicationSales deleted Successfully");
+            return new AppResponse<>("00", "success", "MedicationSales deleted Successfully", null);
         } catch (Exception e) {
-            logger.error("Database operation failed: {}", e.getMessage(), e);
             System.err.println("Database operation failed: {}" + e.getMessage() + e);
-            return new GenericResponse("106", "failed", "Internal Server Error");
+            return new AppResponse<>("106", "failed", "Internal Server Error", null);
         }
     }
 }

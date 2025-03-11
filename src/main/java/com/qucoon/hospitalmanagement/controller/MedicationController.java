@@ -1,11 +1,9 @@
 package com.qucoon.hospitalmanagement.controller;
 
+import com.qucoon.hospitalmanagement.model.entity.Medication;
+import com.qucoon.hospitalmanagement.model.response.*;
 import com.qucoon.hospitalmanagement.service.MedicationService;
 import com.qucoon.hospitalmanagement.model.request.MedicationAddRequest;
-import com.qucoon.hospitalmanagement.model.response.GenericResponse;
-import com.qucoon.hospitalmanagement.model.response.GetAllMedicationsResponse;
-import com.qucoon.hospitalmanagement.model.response.GetMedicationResponse;
-import com.qucoon.hospitalmanagement.model.response.GetMedicationRevenueResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/medication")
@@ -27,38 +26,38 @@ public class MedicationController {
         this.medicationService = medicationService;
     }
 
-    @PostMapping("/create-medication")
-    public ResponseEntity<GenericResponse> createMedication(@Valid @RequestBody MedicationAddRequest request){
+    @PostMapping("/create")
+    public ResponseEntity<AppResponse<Void>> createMedication(@Valid @RequestBody MedicationAddRequest request){
         return ResponseEntity.ok(medicationService.createMedication(request));
     }
 
     @PatchMapping("/update/{medicationId}")
-    public ResponseEntity<GenericResponse> updateMedication(@Valid @RequestBody MedicationAddRequest request, @PathVariable String medicationId){
+    public ResponseEntity<AppResponse<Void>> updateMedication(@Valid @RequestBody MedicationAddRequest request, @PathVariable String medicationId){
         return ResponseEntity.ok(medicationService.updateMedication(medicationId,request));
     }
 
     @DeleteMapping("/delete/{medicationId}")
-    public ResponseEntity<GenericResponse> deleteMedication(@PathVariable int medicationId){
+    public ResponseEntity<AppResponse<Void>> deleteMedication(@PathVariable int medicationId){
         return ResponseEntity.ok(medicationService.deleteMedication(medicationId));
     }
 
     @GetMapping("/all-general")
-    public ResponseEntity<GetAllMedicationsResponse> getMedications(){
+    public ResponseEntity<AppResponse<List<Medication>>> getMedications(){
         return ResponseEntity.ok(medicationService.getAllMedication());
     }
 
     @GetMapping("/all")
-    public ResponseEntity<GetAllMedicationsResponse> getActiveMedications(){
+    public ResponseEntity<AppResponse<List<Medication>>> getActiveMedications(){
         return ResponseEntity.ok(medicationService.getAllActiveMedication());
     }
 
     @GetMapping("/get/{medicationId}")
-    public ResponseEntity<GetMedicationResponse> getMedicationById(@PathVariable int medicationId) {
+    public ResponseEntity<AppResponse<Medication>> getMedicationById(@PathVariable int medicationId) {
         return ResponseEntity.ok(medicationService.getMedicationById(medicationId));
     }
 
-    @GetMapping("/get-medication/{medicationId}")
-    public ResponseEntity<GetMedicationRevenueResponse> getMedicationRevenue(@PathVariable int medicationId,
+    @GetMapping("/get-medication-revenue/{medicationId}")
+    public ResponseEntity<AppResponse<MedicationRevenueResp>> getMedicationRevenue(@PathVariable int medicationId,
                                                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
                                                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate) {
         String startDateStr = startDate.format(MYSQL_TIMESTAMP_FORMAT);

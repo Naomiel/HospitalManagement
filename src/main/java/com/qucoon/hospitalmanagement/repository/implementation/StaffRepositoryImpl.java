@@ -85,8 +85,8 @@ public class StaffRepositoryImpl implements StaffRepository {
                     .addValue("staffHireDate",Staff.getStaffHireDate())
                     .addValue("staffStatus",Staff.getStaffStatus());
 
-            var query = StaffQuery.buildUpdateQuery(Staff, String.valueOf(staffId));
-            return jdbcTemplate.update(query, params);
+            //var query = StaffQuery.buildUpdateQuery(Staff, String.valueOf(staffId));
+            return jdbcTemplate.update(StaffQuery.UPDATE_STAFF, params);
         }
         catch(Exception e){
             System.out.println(">> EXCEPTION ");

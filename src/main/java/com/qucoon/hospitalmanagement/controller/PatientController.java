@@ -19,7 +19,7 @@ public class PatientController {
     private final PatientService patientService;
 
 
-    @PostMapping("/create-patient")
+    @PostMapping("/create")
     public ResponseEntity<AppResponse<PatientResponse>> createPatient(@RequestBody PatientCreateRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(patientService.createPatient(request));
     }
